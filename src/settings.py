@@ -25,6 +25,20 @@ WORKING_DIR = os.path.abspath(os.path.join(BASE_DIR, os.pardir))
 
 
 class BaseConfig(ABC):
+    """This class initializes base configurations settings to be
+    utilized by the Flask application. Use the following example code
+    on the Flask application instance::
+
+        app.config.from_object(...)
+
+    .. note:: This class is an abstract class that does not specify the
+        current application environment. Create subclasses that extends
+        the :class:`BaseConfig` to override its base configurations for
+        each environment type for the Flask application to be easily
+        customizable by the environmental variable ``FLASK_ENV``.
+    """
+
+    # pylint: disable=too-few-public-methods, invalid-name
 
     #: A generated secret key to keep the client-side sessions secure.
     SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(24))
