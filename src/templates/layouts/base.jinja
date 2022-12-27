@@ -7,10 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>{{ title ~ " -" if title else title }} Flask Login</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo/favicon.ico') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='dist/main.css') }}" />
 </head>
 
-<body>
+<body class="bg-white">
   {% block body %}{% endblock body %}
   <script src="{{ url_for('static', filename='dist/main.js') }}"></script>
 </body>

@@ -1,0 +1,11 @@
+{% extends "layouts/base.jinja" %}
+
+{% block body %}
+{% include "includes/navigation.jinja" %}
+
+<main id="page-{{ title|lower|replace(' ', '-') }}">
+  {% block content %}{% endblock content %}
+</main>
+
+{% include "includes/footer.jinja" %}
+{% endblock body %}
