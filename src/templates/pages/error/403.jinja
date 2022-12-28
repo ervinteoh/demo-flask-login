@@ -1,0 +1,17 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Forbidden Error" %}
+{% set error_code = "403" %}
+
+{% block content %}
+<p>
+  You do not have permission to access this server.
+  <br class="hidden sm:block">
+  Try reloading the page.
+</p>
+{% endblock content %}
+
+{% block button %}
+<button class="btn btn-primary" onClick="window.location.reload();">
+  Reload
+</button>
+{% endblock button%}

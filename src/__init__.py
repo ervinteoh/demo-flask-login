@@ -15,7 +15,7 @@ The flask configuration settings are based in :file:`settings.py` which
 are used depending on the environment set on ``FLASK_ENV``. Please read
 :file:`settings.py` for more information.
 """
-from flask import Flask
+from flask import Flask, current_app, render_template
 
 from src import extensions, settings
 from src.views import public
@@ -40,6 +40,7 @@ def create_app() -> Flask:
     register_extensions(app)
     register_blueprints(app)
     register_shellcontext(app)
+    register_errorhandlers(app)
 
     return app
 
@@ -81,3 +82,25 @@ def register_shellcontext(app: Flask):
     shell_context = {"db": extensions.db}
 
     app.shell_context_processor(lambda: shell_context)
+
+
+def register_errorhandlers(app: Flask):
+    """Register error handlers.
+
+    :param app: The application instance.
+    :type app: Flask
+    """
+
+    def render_error(error):
+        """Render error template."""
+        code = getattr(error, "code", 500)
+        return render_template(f"pages/error/{code}.jinja"), code
+
+    def handle_exception(error):
+        current_app.logger.exception(error)
+        return render_template("pages/error/500.jinja"), 500
+
+    for code in [400, 401, 403, 404, 405, 502, 503, 504]:
+        app.errorhandler(code)(render_error)
+
+    app.register_error_handler(Exception, handle_exception)

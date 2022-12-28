@@ -1,0 +1,15 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Page Not Found" %}
+{% set error_code = "404" %}
+
+{% block content %}
+<p>
+  This page does not exist or was removed!
+  <br class="hidden sm:block">
+  We suggest you go back to home.
+</p>
+{% endblock content %}
+
+{% block button %}
+<a href="/" class="btn btn-primary">Back to Home</a>
+{% endblock button %}

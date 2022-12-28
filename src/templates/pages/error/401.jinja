@@ -1,0 +1,15 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Not Authorized" %}
+{% set error_code = "401" %}
+
+{% block content %}
+<p>
+  This page is not publicly available.
+  <br class="hidden sm:block">
+  To access please login first.
+</p>
+{% endblock content %}
+
+{% block button %}
+<a href="/" class="btn btn-primary">Login</a>
+{% endblock button%}
