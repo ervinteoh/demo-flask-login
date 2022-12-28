@@ -1,6 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Inter";
+  }
+
+  h1,
+  .h1 {
+    @apply text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl;
+    @apply font-bold 2xl:font-semibold;
+    @apply xl:leading-tight;
+  }
+
+  h2,
+  .h2 {
+    @apply text-7xl;
+    @apply font-bold;
+  }
+
+  h3,
+  .h3 {
+    @apply text-6xl;
+    @apply font-bold;
+  }
+
+  h4,
+  .h4 {
+    @apply text-4xl;
+    @apply font-bold;
+  }
+
+  h5,
+  .h5 {
+    @apply text-xl;
+    @apply font-bold;
+  }
+
+  a {
+    @apply text-primary-500;
+  }
+
+  a:hover {
+    @apply text-primary-400;
+  }
+
+  a.text-light {
+    @apply text-white;
+  }
+
+  a:hover {
+    @apply text-primary-500;
+  }
+
+  p {
+    @apply mt-1;
+    @apply mb-3;
+  }
+
+  ul,
+  ol {
+    @apply py-3;
+    @apply pl-8;
+    @apply leading-8;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  input:not([type="submit"]):not([type="checkbox"]) {
+    @apply bg-neutral-50;
+    @apply border;
+    @apply rounded-md;
+    @apply px-7;
+    @apply py-4;
+    @apply w-full;
+  }
+
+  input[type="submit"] {
+    @apply btn;
+    @apply btn-primary;
+    @apply cursor-pointer;
+  }
+
+  div:has(> input[type="checkbox"]):has(> label) {
+    @apply flex;
+    @apply items-center;
+    @apply gap-x-4;
+  }
+
+  input[type="checkbox"] {
+    @apply h-4;
+    @apply w-4;
+  }
+
+  label {
+    user-select: none;
+  }
+}
 
 @layer components {
   .wordmark {
@@ -12,6 +116,22 @@
   .wordmark-sm {
     @apply text-primary-900;
     @apply text-xl;
+    @apply tracking-wide;
+  }
+
+  .subtitle {
+    @apply text-base lg:text-lg;
+  }
+
+  .subtitle-sm {
+    @apply text-base;
+    @apply font-medium;
+  }
+
+  .row {
+    @apply grid;
+    @apply grid-cols-4 md:grid-cols-8 lg:grid-cols-12;
+    @apply gap-6;
   }
 
   button,

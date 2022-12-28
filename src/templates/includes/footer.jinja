@@ -1,0 +1,55 @@
+<footer class="text-white bg-black">
+  <div class="container">
+    <div class="pt-16 row">
+      <div class="col-span-4 md:col-span-8 lg:col-span-4">
+        <a href="/" class="inline-flex items-center gap-x-4">
+          <object data="{{ url_for('static', filename='img/logo/company-light.svg') }}"
+            height="32" width="32" alt="Company Logo" title="Company Logo"
+            class="pointer-events-none">
+          </object>
+          <span class="text-white wordmark-sm">
+            <strong>Flask</strong>Login
+          </span>
+        </a>
+        <p class="mt-4">
+          The website is a demo project simulating a web application with sign in and
+          sign up feature. The learning outcome of this project is mainly focused on
+          tailwindcss and Google's login API.
+        </p>
+        <p class="mt-4">
+          The developer already had prior exprience on Python and Flask developing other
+          web application projects.
+        </p>
+      </div>
+      <div class="hidden col-span-2 lg:block"></div>
+      <div class="flex flex-col col-span-2 md:col-span-4 lg:col-span-3 gap-y-4">
+        <h5>Resources</h5>
+        <a href="https://www.python.org/" target="_blank" class="text-light">Python</a>
+        <a href="https://tailwindcss.com/" target="_blank" class="text-light">
+          Tailwindcss</a>
+        <a href="https://webpack.js.org/" target="_blank" class="text-light">Webpack</a>
+        <a href="https://www.figma.com/" target="_blank" class="text-light">Figma</a>
+        <a href="https://coolors.co/" target="_blank" class="text-light">Coolors</a>
+        <a href="https://github.com/" target="_blank" class="text-light">Github</a>
+        <a href="https://heroku.com/" target="_blank" class="text-light">Heroku</a>
+      </div>
+      <div class="flex flex-col col-span-2 md:col-span-4 lg:col-span-3 gap-y-4">
+        <h5>Explore</h5>
+        <a href="https://www.figma.com/file/IlUH7I2IBZBTBiMoX9CO5P/Flask-Login?node-id=0%3A1&t=98MmGoG9LDAi0OK8-1"
+          target="_blank" class="text-light">Figma Prototype</a>
+        <a href="https://github.com/ervinteoh/flask-login" target="_blank"
+          class="text-light">Github Repository</a>
+        <a href="" class="text-light">Documentation</a>
+        <a href="" class="text-light">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="container pt-8 pb-10 lg:pt-4">
+    <div class="flex items-center justify-between gap-x-3">
+      <p class="text-sm m-0">© 2022 All rights reserved. Ervin Teoh.</p>
+      <object data="{{ url_for('static', filename='img/logo/ervinteoh.svg') }}"
+        height="24" alt="Ervin Teoh Developer Logo" title="Ervin Teoh Developer Logo">
+      </object>
+    </div>
+  </div>
+</footer>
