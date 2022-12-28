@@ -1,3 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Inter";
+  }
+
+  h1,
+  .h1 {
+    @apply text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl;
+    @apply font-bold 2xl:font-semibold;
+    @apply xl:leading-tight;
+  }
+
+  h2,
+  .h2 {
+    @apply text-7xl;
+    @apply font-bold;
+  }
+
+  h3,
+  .h3 {
+    @apply text-6xl;
+    @apply font-bold;
+  }
+
+  h4,
+  .h4 {
+    @apply text-4xl;
+    @apply font-bold;
+  }
+
+  h5,
+  .h5 {
+    @apply text-xl;
+    @apply font-bold;
+  }
+
+  a {
+    @apply text-primary-500;
+  }
+
+  a:hover {
+    @apply text-primary-400;
+  }
+
+  a.text-light {
+    @apply text-white;
+  }
+
+  a:hover {
+    @apply text-primary-500;
+  }
+
+  p {
+    @apply mt-1;
+    @apply mb-3;
+  }
+
+  ul,
+  ol {
+    @apply py-3;
+    @apply pl-8;
+    @apply leading-8;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  input:not([type="submit"]):not([type="checkbox"]) {
+    @apply bg-neutral-50;
+    @apply border;
+    @apply rounded-md;
+    @apply px-7;
+    @apply py-4;
+    @apply w-full;
+  }
+
+  input[type="submit"] {
+    @apply btn;
+    @apply btn-primary;
+    @apply cursor-pointer;
+  }
+
+  div:has(> input[type="checkbox"]):has(> label) {
+    @apply flex;
+    @apply items-center;
+    @apply gap-x-4;
+  }
+
+  input[type="checkbox"] {
+    @apply h-4;
+    @apply w-4;
+  }
+
+  label {
+    user-select: none;
+  }
+}
+
+@layer components {
+  .wordmark {
+    @apply text-primary-900;
+    @apply text-xl md:text-2xl;
+    @apply tracking-wide;
+  }
+
+  .wordmark-sm {
+    @apply text-primary-900;
+    @apply text-xl;
+    @apply tracking-wide;
+  }
+
+  .subtitle {
+    @apply text-base lg:text-lg;
+  }
+
+  .subtitle-sm {
+    @apply text-base;
+    @apply font-medium;
+  }
+
+  .row {
+    @apply grid;
+    @apply grid-cols-4 md:grid-cols-8 lg:grid-cols-12;
+    @apply gap-6;
+  }
+
+  button,
+  .btn {
+    @apply inline-flex;
+    @apply items-center;
+    @apply justify-center;
+    @apply text-sm;
+    @apply font-semibold;
+    @apply tracking-widest;
+    @apply rounded-lg;
+    @apply px-6 md:px-7;
+    @apply py-4 md:py-5;
+    @apply leading-none;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500;
+    @apply text-white;
+  }
+
+  .btn-primary:hover {
+    @apply bg-primary-400;
+    @apply text-white;
+  }
+
+  .btn-primary:disabled {
+    @apply bg-primary-200;
+    @apply text-white;
+  }
+
+  .btn-none-secondary {
+    @apply text-neutral-600;
+  }
+
+  .btn-none-secondary:hover {
+    @apply text-neutral-500;
+  }
+
+  .btn-none-secondary:disabled {
+    @apply text-neutral-300;
+  }
+
+  .btn-outline-secondary {
+    @apply border-2;
+    @apply border-neutral-600;
+    @apply text-neutral-600;
+  }
+
+  .btn-outline-secondary:hover {
+    @apply bg-neutral-500;
+    @apply border-neutral-500;
+    @apply text-white;
+  }
+
+  .btn-outline-secondary:disabled {
+    @apply border-neutral-300;
+    @apply text-neutral-300;
+  }
+}
+
+@layer utilities {
+  .overline {
+    @apply uppercase;
+    @apply text-sm;
+    @apply font-medium;
+    @apply tracking-widest;
+    @apply no-underline;
+  }
+
+  .container {
+    @apply max-w-full xl:max-w-[1140px] 2xl:max-w-[1320px];
+    @apply px-6 lg:px-10 xl:px-0;
+  }
+}
