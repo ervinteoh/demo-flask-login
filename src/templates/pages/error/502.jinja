@@ -1,0 +1,17 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Bad Gateway" %}
+{% set error_code = "502" %}
+
+{% block content %}
+<p>
+  The server encountered a temporary error and couldn't complete
+  your request.
+</p>
+<p>Please try again in 30 seconds.</p>
+{% endblock content %}
+
+{% block button %}
+<button class="btn btn-primary" onClick="window.location.reload();">
+  Reload
+</button>
+{% endblock button %}

@@ -1,0 +1,11 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Method Not Allowed" %}
+{% set error_code = "405" %}
+
+{% block content %}
+<p>Sorry, the requested URL is not allowed.</p>
+{% endblock content %}
+
+{% block button %}
+<a href="/" class="btn btn-primary">Back to Home</a>
+{% endblock button%}

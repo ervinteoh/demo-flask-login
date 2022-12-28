@@ -1,0 +1,24 @@
+{% extends "layouts/base.jinja" %}
+
+{% block body %}
+<main id="page-{{ title|lower|replace(' ', '-') }}">
+  <div class="container">
+    <div class="flex items-center justify-center h-screen">
+      <div class="flex flex-col items-start gap-0 lg:flex-row lg:items-center lg:gap-20">
+        <h1 class="text-7xl md:text-8xl lg:text-[8rem]">{{ error_code }}</h1>
+        <div class="hidden lg:block h-24 w-[0.3125rem] bg-primary-500 rounded"></div>
+        <div>
+          <h2 class="mb-4 text-4xl leading-tight md:text-6xl lg:text-7xl">
+            <span class="hidden lg:block">Oops!<br></span>
+            {{ title }}
+          </h2>
+          <div class="mb-6">
+            {% block content %}{% endblock content %}
+          </div>
+          {% block button %}{% endblock button %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock body %}

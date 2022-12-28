@@ -1,0 +1,17 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Gateway Timeout" %}
+{% set error_code = "504" %}
+
+{% block content %}
+<p>This page is taking too long to load.</p>
+<p>
+  Sorry about that. Please try refreshing the page and contact
+  us if the problem persists.
+</p>
+{% endblock content %}
+
+{% block button %}
+<button class="btn btn-primary" onClick="window.location.reload();">
+  Reload
+</button>
+{% endblock button %}
