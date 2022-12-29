@@ -25,6 +25,17 @@ def test_visit_home_page(client: TestApp):
 
 
 @pytest.mark.usefixtures("db")
+def test_visit_terms_of_service(client: TestApp):
+    """Visit terms of service page.
+
+    :param client: The test app client instance.
+    :type client: TestApp
+    """
+    res = client.get("/terms-of-service")
+    assert "<title>Terms of Service - Flask Login</title>" in res
+
+
+@pytest.mark.usefixtures("db")
 def test_visit_page_not_exist(client: TestApp):
     """Visit page that does not exist.
 

@@ -11,3 +11,9 @@ blueprint = Blueprint("public", __name__)
 def home():
     """Home Page."""
     return render_template("pages/public/home.jinja")
+
+
+@blueprint.route("/terms-of-service")
+def terms_of_service():
+    """Terms of Service Page."""
+    return render_template("pages/public/terms_of_service.jinja")
