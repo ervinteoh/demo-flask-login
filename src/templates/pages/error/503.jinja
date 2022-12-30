@@ -1,0 +1,14 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Service Unavailable" %}
+{% set error_code = "503" %}
+
+{% block content %}
+<p>
+  The server is temporarily busy.
+  Try again later.
+</p>
+{% endblock content %}
+
+{% block button %}
+<a href="/" class="btn btn-primary">Back to Home</a>
+{% endblock button %}

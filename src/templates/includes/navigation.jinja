@@ -1,0 +1,21 @@
+<nav class="bg-white drop-shadow lg:drop-shadow-none">
+  <div class="container py-4 md:py-6">
+    <div class="flex items-center">
+      <div class="flex items-center flex-auto">
+        <a href="/" class="inline-flex items-center gap-x-4">
+          <object data="{{ url_for('static', filename='img/logo/company.svg') }}"
+            width="40" height="40" alt="Company Logo" title="Company Logo"
+            class="pointer-events-none">
+          </object>
+          <span class="hidden wordmark md:block">
+            <strong>Flask</strong>Login
+          </span>
+        </a>
+      </div>
+      <div class="flex-auto text-right">
+        <a href="" class="hidden btn btn-none-secondary sm:inline-block">Sign In</a>
+        <a href="" class="btn btn-primary">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</nav>

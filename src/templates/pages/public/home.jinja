@@ -1,0 +1,50 @@
+{% extends "layouts/default.jinja" %}
+{% set title = "Home" %}
+
+{% block content %}
+<section id="hero">
+  <div class="container">
+    <div class="items-center grid-flow-row row md:grid-rows-1 auto-rows-auto py-4">
+      <div class="col-span-4 row-auto py-6 md:py-12 xl:py-20 lg:col-span-6">
+        <p class="overline text-primary-600">30 Day Free Trial</p>
+        <h1>Plan Your Next Perfect Vacation</h1>
+        <p class="subtitle">Organize your bookings and itinerary in one app.</p>
+        <div class="flex gap-6 mt-10">
+          <a href="/" class="btn btn-primary">Try It Free</a>
+          <a href="/" class="btn btn-outline-secondary">Read More</a>
+        </div>
+      </div>
+      <div class="col-span-4 md:col-span-4 lg:col-span-6 relative -z-10 h-[80vw]
+          md:h-full">
+        <object data="{{ url_for('static', filename='img/illustration/holiday.svg') }}"
+          class="absolute -left-[40%] top-0 bottom-0 m-auto max-h-full" alt=""
+          title="Hero Image">
+        </object>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="container pt-6 pb-16">
+    <div class="flex justify-center">
+      <h2 class="subtitle-sm">Demo web application developed with these resources</h2>
+    </div>
+    <div class="flex flex-wrap items-center justify-center pt-8 gap-x-8 md:gap-x-16
+        gap-y-8">
+      {% for logo in [
+      ['python', '30'],
+      ['flask', '35'],
+      ['webpack', '35'],
+      ['figma', '35'],
+      ['coolors', '18'],
+      ['tailwindcss', '18']
+      ]%}
+      <object data="{{ url_for('static', filename='img/logo/' ~ logo[0] ~ '.svg') }}"
+        height="{{logo[1]}}" class="my-auto" alt="Logo {{ logo[0] | title }}"
+        title="Logo {{ logo[0] | title }}">
+      </object>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock content %}

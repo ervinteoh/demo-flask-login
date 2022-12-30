@@ -1,0 +1,16 @@
+{% extends "layouts/error.jinja" %}
+{% set title = "Server Error" %}
+{% set error_code = "500" %}
+
+{% block content %}
+<p>
+  Try to refresh this page or feel free to contact us if the
+  problem persists.
+</p>
+{% endblock content %}
+
+{% block button %}
+<button class="btn btn-primary" onClick="window.location.reload();">
+  Reload
+</button>
+{% endblock button %}
