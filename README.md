@@ -35,7 +35,7 @@
     <a href="https://github.com/ervinteoh/flask-demo-login"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://flask-demo-login-staging.onrender.com/">View Demo</a>
+    <a href="https://flask-demo-login.onrender.com/">View Demo</a>
     ·
     <a href="https://github.com/ervinteoh/flask-demo-login/issues">Report Bug</a>
     ·
@@ -76,7 +76,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://flask-demo-login-staging.onrender.com/)
+[![Product Name Screen Shot][product-screenshot]](https://flask-demo-login.onrender.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
