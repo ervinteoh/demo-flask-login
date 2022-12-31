@@ -8,6 +8,7 @@ in the application factory method :func:`register_extensions`.
 """
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -28,6 +29,11 @@ csrf_protect = CSRFProtect()
 #: SQL. The extension compatibility ranges to widely known databases
 #: such as SQLite, PostgreSQL, Microsoft SQL Server, Oracle, etc.
 db = SQLAlchemy()
+
+#: Flask-Login provides user session management across for Flask
+#: by handling the common tasks of logging in, logging out, and
+#: remembering your users’ sessions over extended periods of time.
+login_manager = LoginManager()
 
 #: Flask-Migrate is an extension that handles SQLAlchemy database
 #: migrations for Flask applications using Alembic. The database

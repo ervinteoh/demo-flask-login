@@ -40,11 +40,11 @@ class TestCRUDMixin:
 
     def test_create_valid_attribute(self, mocker: Mocker, model: MockModel):
         """Create model with valid attributes."""
-        mocker.patch.object(MockModel, "__init__", return_value=None)
         mocker.patch.object(CRUDMixin, "save", return_value=model)
         result = MockModel.create(name=model.name, age=model.age)
         result.save.assert_called_once()
-        result.__init__.assert_called_once_with(name=model.name, age=model.age)
+        assert result.name == model.name
+        assert result.age == model.age
         assert result == model
 
     def test_create_invalid_attribute(self, mocker: Mocker):
