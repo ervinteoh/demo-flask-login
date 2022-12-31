@@ -15,6 +15,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 from src import create_app
 from src.extensions import db as _db
+from src.models import User
+from tests.factories import UserFactory
 
 
 @pytest.fixture(name="app")
@@ -25,7 +27,7 @@ def fixture_app() -> Flask:
     :yield: The application instance.
     :rtype: Flask
     """
-    os.environ["TESTING"] = "True"
+    os.environ["FLASK_TESTING"] = "True"
     application = create_app()
     ctx = application.test_request_context()
     ctx.push()
@@ -53,3 +55,12 @@ def fixture_db(app: Flask) -> SQLAlchemy:
 
     _db.session.close()
     _db.drop_all()
+
+
+@pytest.fixture(name="user")
+def fixture_user(db: SQLAlchemy) -> User:
+    """User fixture."""
+    user = UserFactory()
+    db.session.add(user)
+    db.session.commit()
+    return User.get_by_id(user.id)

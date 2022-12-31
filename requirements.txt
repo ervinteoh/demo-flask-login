@@ -26,6 +26,7 @@ Flask-Mail==0.9.1
 Flask-Migrate==4.0.0
 Flask-SQLAlchemy==3.0.2
 Flask-WTF==1.0.1
+freezegun==1.2.2
 greenlet==2.0.1
 gunicorn==20.0.4
 importlib-metadata==5.1.0
@@ -54,6 +55,7 @@ pylint-flask-sqlalchemy==0.2.0
 pylint-plugin-utils==0.7
 pyproject_api==1.2.1
 pytest==7.2.0
+pytest-mock==3.10.0
 python-dateutil==2.8.2
 python-dotenv==0.21.0
 setuptools==65.5.0
