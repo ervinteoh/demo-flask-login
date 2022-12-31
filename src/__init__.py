@@ -33,7 +33,7 @@ def create_app() -> Flask:
     :rtype: Flask
     """
     app = Flask(__name__)
-    config = settings.get_config(app)
+    config = settings.get_config()
     app.config.from_object(config)
     app.url_map.strict_slashes = False
 

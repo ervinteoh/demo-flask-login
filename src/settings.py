@@ -11,8 +11,6 @@ or ``development`` for environment type configuration respectively.
 import os
 from abc import ABC, abstractmethod
 
-from flask import Flask
-
 #: This directory is the application directory where the code
 #: entrypoint is located. Use this directory path to locate static
 #: files located in the application code.
@@ -113,19 +111,17 @@ class ReleaseConfig(BaseConfig):
     DATABASE_URI = os.path.join(WORKING_DIR, "production.sqlite")
 
 
-def get_config(app: Flask):
+def get_config():
     """Get application configuration dependent on the environmental
-    variables set. The enviornmental variable ``DEBUG`` should enable
-    development enviornment while ``TESTING`` enables the testing
+    variables set. The environmental variable ``DEBUG`` should enable
+    development environment while ``TESTING`` enables the testing
     environment.
 
-    :param app: Flask application instance.
-    :type app: Flask
     :return: The application configuration.
     :rtype: BaseConfig
     """
-    if app.config["DEBUG"]:
-        return DebugConfig()
-    if app.config["TESTING"]:
+    if os.environ.get("FLASK_TESTING"):
         return TestingConfig()
+    if os.environ.get("FLASK_DEBUG"):
+        return DebugConfig()
     return ReleaseConfig()

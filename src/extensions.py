@@ -25,7 +25,7 @@ csrf_protect = CSRFProtect()
 
 #: SQLAlchemy is the Python SQL toolkit and Object Relational Mapper
 #: that gives application developers the full power and flexibility of
-#: SQL. The extension compatability ranges to widely known databases
+#: SQL. The extension compatibility ranges to widely known databases
 #: such as SQLite, PostgreSQL, Microsoft SQL Server, Oracle, etc.
 db = SQLAlchemy()
 

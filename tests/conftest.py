@@ -25,7 +25,7 @@ def fixture_app() -> Flask:
     :yield: The application instance.
     :rtype: Flask
     """
-    os.environ["TESTING"] = "True"
+    os.environ["FLASK_TESTING"] = "True"
     application = create_app()
     ctx = application.test_request_context()
     ctx.push()
