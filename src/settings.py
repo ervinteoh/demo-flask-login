@@ -47,6 +47,24 @@ class BaseConfig(ABC):
     #: Disable SQLAlchemy logging messages.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Flask Mail server default to mail trap url.
+    MAIL_SERVER = os.environ.get("MAIL_SERVER", "smtp.mailtrap.io")
+
+    # Flask Mail port default to mail trap config.
+    MAIL_PORT = os.environ.get("MAIL_PORT", 2525)
+
+    # Flask Mail username authentication.
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+
+    # Flask Mail password authentication.
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+
+    # Flask Mail TLS default to mail trap config.
+    MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS", True)
+
+    # Flask Mail SSL default to mail trap config.
+    MAIL_USE_SSL = os.environ.get("MAIL_USE_SSL", False)
+
     #: The folder directory for jinja templates.
     TEMPLATES_FOLDER = "templates"
 
@@ -97,6 +115,9 @@ class TestingConfig(BaseConfig):
     #: persisted for temporary testing purposes.
     DATABASE_URI = ":memory:"
 
+    #: Application environment set to TESTING.
+    TESTING = True
+
     #: Disable CSRF protection for easier API development.
     WTF_CSRF_ENABLED = False
 
@@ -109,6 +130,9 @@ class ReleaseConfig(BaseConfig):
 
     #: Set the database URI to a production database.
     DATABASE_URI = os.path.join(WORKING_DIR, "production.sqlite")
+
+    # Flask Mail server default to mail trap url.
+    MAIL_SERVER = os.environ.get("MAIL_SERVER", "send.smtp.mailtrap.io")
 
 
 def get_config():

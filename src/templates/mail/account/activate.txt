@@ -1,0 +1,12 @@
+Hi {{ user.first_name }} {{ user.last_name }},
+
+Thank you for registering an account with us. You will need to activate your account
+before you can log in. Please copy and paste the link below in your browser to activate
+your Data Management GUI account.
+
+{{ url }}
+
+Incase you've forgotten your username, your username is: "{{ user.username }}".
+
+Regards,
+Flask Login.

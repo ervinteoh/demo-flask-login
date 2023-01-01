@@ -191,6 +191,114 @@
     @apply border-neutral-300;
     @apply text-neutral-300;
   }
+
+  .btn-close {
+    @apply px-5;
+    @apply py-4;
+    @apply bg-neutral-500;
+    @apply h-full;
+    mask-image: url("..\\img\\icon\\x-mark.svg");
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+
+  .form-control {
+    @apply relative;
+  }
+
+  .form-control > label {
+    @apply absolute;
+    @apply pointer-events-none;
+    @apply left-7;
+    @apply top-4;
+    @apply text-neutral-400;
+  }
+
+  .form-control > input:focus {
+    @apply border-primary-600;
+    @apply outline-none;
+    transition: 0.4s ease border;
+  }
+
+  .form-control > input:focus ~ label,
+  .form-control > input[active] ~ label {
+    @apply -top-3;
+    @apply left-5;
+    @apply bg-white;
+    @apply px-2;
+    @apply text-sm;
+    @apply text-primary-600;
+    transition: 0.4s ease all;
+  }
+
+  .form-control > input:not(:focus)[active],
+  .form-control > input:not(:focus)[active] ~ label {
+    @apply text-neutral-800;
+  }
+
+  .invalid-feedback > span {
+    @apply text-sm;
+  }
+
+  .invalid-feedback > span,
+  .form-control:has(+ .invalid-feedback > span) > input[active] ~ label,
+  .form-control:has(+ .invalid-feedback > span) > input:focus ~ label {
+    @apply text-red-500;
+  }
+
+  .form-control:has(+ .invalid-feedback > span) > input {
+    @apply border-red-500;
+  }
+
+  .alert {
+    @apply w-full;
+    @apply flex;
+    @apply items-center;
+    @apply justify-between;
+    @apply gap-4;
+    @apply pl-8;
+    @apply pr-4;
+    @apply py-4;
+    @apply rounded;
+    @apply border;
+    @apply bg-neutral-200;
+    @apply border-neutral-300;
+    @apply text-neutral-800;
+  }
+
+  .alert.alert-primary {
+    @apply bg-primary-200;
+    @apply border-primary-300;
+    @apply text-primary-800;
+  }
+
+  .alert.alert-info {
+    @apply bg-blue-200;
+    @apply border-blue-300;
+    @apply text-blue-800;
+  }
+
+  .alert.alert-success {
+    @apply bg-green-200;
+    @apply border-green-300;
+    @apply text-green-800;
+  }
+
+  .alert.alert-warning {
+    @apply bg-yellow-200;
+    @apply border-yellow-300;
+    @apply text-yellow-800;
+  }
+
+  .alert.alert-danger {
+    @apply bg-red-200;
+    @apply border-red-300;
+    @apply text-red-800;
+  }
+
+  .alert > .btn-close:hover {
+    @apply bg-neutral-700;
+  }
 }
 
 @layer utilities {
