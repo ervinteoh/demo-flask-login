@@ -134,6 +134,9 @@ class ReleaseConfig(BaseConfig):
     # Flask Mail server default to mail trap url.
     MAIL_SERVER = os.environ.get("MAIL_SERVER", "send.smtp.mailtrap.io")
 
+    #: Disable CSRF protection for easier API development.
+    WTF_CSRF_ENABLED = False
+
 
 def get_config():
     """Get application configuration dependent on the environmental
