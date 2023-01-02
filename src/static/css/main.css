@@ -296,6 +296,16 @@
     @apply text-red-800;
   }
 
+  .alert a {
+    @apply underline;
+    @apply font-semibold;
+    color: inherit !important;
+  }
+
+  .alert a:hover {
+    @apply opacity-90;
+  }
+
   .alert > .btn-close:hover {
     @apply bg-neutral-700;
   }

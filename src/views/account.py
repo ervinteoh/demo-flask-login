@@ -78,10 +78,7 @@ def register_post():
         last_name=form.last_name.data,
         password=form.password.data,
     )
-    token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT)
-    url = request.host_url.rstrip("/") + url_for("account.activate", token=token)
-    user.send_mail("Activate your account", "account/activate", url=url)
-    flash("An email has been sent to your inbox to activate your account.", "info")
+    send_activation(user.id)
     return redirect(url_for("account.login"))
 
 
@@ -117,7 +114,10 @@ def login_post():
     if not form.validate_on_submit():
         message = "Invalid username or password"
         if form.user and not form.user.is_active:
+            activation_link = url_for("account.send_activation", user_id=form.user.id)
             message = "Your account is not activated."
+            message += f"""<br><a href="{activation_link}">
+            Click here to resend your activation email.</a>"""
         elif form.user and form.user.is_locked():
             message = """Your account has been locked due to too \
             many failed login attempts."""
@@ -136,4 +136,15 @@ def logout():
     if current_user.is_authenticated:
         flash("You have successfully logged out.", "success")
     logout_user()
+    return redirect(url_for("account.login"))
+
+
+@blueprint.route("/activate/send/<int:user_id>")
+def send_activation(user_id):
+    """Send email activation link."""
+    user: User = User.get_by_id(user_id)
+    token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT)
+    url = request.host_url.rstrip("/") + url_for("account.activate", token=token)
+    user.send_mail("Activate your account", "account/activate", url=url)
+    flash("An email has been sent to your inbox to activate your account.", "info")
     return redirect(url_for("account.login"))
