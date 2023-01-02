@@ -1,11 +1,13 @@
 """This module defines unit test cases for the wtforms defined in
 ``services`` package in :file:`form.py` module.
 """
+from datetime import datetime
+
 import pytest
 
 from src.database import db
 from src.models.user import ERROR_EMAIL, ERROR_PASSWORD, ERROR_USERNAME, User
-from src.services.form import RegisterForm
+from src.services.form import LoginForm, RegisterForm
 from tests.factories import UserFactory
 
 
@@ -105,3 +107,63 @@ class TestRegisterForm:
     def test_submit_valid_values(self, form: RegisterForm):
         """Submit form with all valid values."""
         assert form.validate()
+
+
+@pytest.mark.usefixtures("db")
+class TestLoginForm:
+    """Account login form."""
+
+    # Constant password for tests.
+    password = "Pass123$"
+
+    @pytest.fixture(name="form")
+    def fixture_form(self, user: User):
+        """User instance."""
+        user.password = self.password
+        user.is_active = True
+        db.session.add(user)
+        db.session.commit()
+        return LoginForm(username=user.username, password=self.password)
+
+    def test_username_not_taken(self, form: LoginForm):
+        """Login with not taken username."""
+        form.username.data = "invalid"
+        assert form.validate() is False
+        assert form.user is None
+
+    def test_password_incorrect(self, form: LoginForm, user):
+        """Login with incorrect password."""
+        form.password.data = "Past123$"
+        assert form.validate() is False
+        assert form.user == user
+
+    def test_lock_duration_expired(self, mocker, form: LoginForm, user: User):
+        """Login with valid values where the lock just expired."""
+        user.lock_datetime = datetime.utcnow()
+        db.session.add(user)
+        db.session.commit()
+        mocker.patch.object(User, "is_locked", return_value=False)
+        form = LoginForm(username=user.username, password=self.password)
+        assert form.validate() is True
+        assert form.user == user
+
+    def test_lock_duration_not_expired(self, mocker, form: LoginForm, user: User):
+        """Login with valid values where the lock just expired."""
+        user.lock_datetime = datetime.utcnow()
+        db.session.add(user)
+        db.session.commit()
+        mocker.patch.object(User, "is_locked", return_value=True)
+        form = LoginForm(username=user.username, password=self.password)
+        assert form.validate() is False
+        assert form.user == user
+
+    def test_username_password_valid(self, form: LoginForm, user):
+        """Login with username."""
+        assert form.validate()
+        assert form.user == user
+
+    def test_email_password_valid(self, form: LoginForm, user):
+        """Login with email."""
+        form.username.data = user.email
+        assert form.validate()
+        assert form.user == user

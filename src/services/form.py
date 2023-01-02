@@ -8,7 +8,8 @@ form functions. Additionally, the forms are able to validate the
 values that are submitted.
 """
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, StringField, SubmitField
+from sqlalchemy import or_
+from wtforms import BooleanField, EmailField, PasswordField, StringField, SubmitField
 from wtforms.validators import (
     DataRequired,
     Email,
@@ -78,3 +79,48 @@ class RegisterForm(FlaskForm):
         """
         if User.query.filter_by(email=email.data).first():
             raise ValidationError("The email is already taken.")
+
+
+class LoginForm(FlaskForm):
+    """Account login form."""
+
+    username = StringField("Username or Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    remember = BooleanField("Remember me")
+    submit = SubmitField("Sign In")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = None
+
+    def validate(self, extra_validators=None):
+        """Validate the state of the form.
+
+        :param extra_validators: A dict mapping field names to lists of
+            extra validator methods to run. Extra validators run after
+            validators passed when creating the field. If the form has
+            validate_<fieldname>, it is the last extra validator,
+            defaults to None
+        :type extra_validators: list, optional
+        :return: bool
+        :rtype: The submitted form is valid.
+        """
+        if not super().validate(extra_validators):
+            return False
+        condition = or_(
+            User.username == self.username.data.lower(),
+            User.email == self.username.data,
+        )
+        self.user: User = User.query.filter(condition).first()
+        if self.user is None:
+            return False
+        if self.user.lock_datetime and not self.user.is_locked():
+            self.user.reset_login_attempt()
+        if not self.user.check_password(self.password.data):
+            self.user.increment_login_attempt()
+            self.user.save()
+            return False
+        if not self.user.is_active or self.user.is_locked():
+            return False
+        self.user.update(login_attempt=0)
+        return True

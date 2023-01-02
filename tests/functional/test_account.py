@@ -7,7 +7,14 @@ from freezegun import freeze_time
 from webtest import TestApp
 
 from src.database import db
-from src.models.user import ERROR_EMAIL, ERROR_PASSWORD, ERROR_USERNAME, User, UserToken
+from src.models.user import (
+    ERROR_EMAIL,
+    ERROR_PASSWORD,
+    ERROR_USERNAME,
+    MAX_LOGIN_ATTEMPTS,
+    User,
+    UserToken,
+)
 from tests.factories import UserFactory
 
 
@@ -87,9 +94,9 @@ class TestRegisterPage:
     def test_submit_valid_values(self, form):
         """Register account with valid values."""
         initial_count = len(User.query.all())
-        form.submit().follow()
+        res = form.submit().follow()
         assert len(User.query.all()) == initial_count + 1
-        # assert "<title>Login - Flask Login</title>" in res
+        assert "<title>Login - Flask Login</title>" in res
 
 
 class TestActivate:
@@ -98,8 +105,8 @@ class TestActivate:
     def test_valid_token(self, client: TestApp, user: User):
         """Activate account with valid token."""
         token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT)
-        client.get(url_for("account.activate", token=token)).follow()
-        # assert "<title>Login - Flask Login</title>" in res
+        res = client.get(url_for("account.activate", token=token)).follow()
+        assert "<title>Login - Flask Login</title>" in res
 
     def test_invalid_token(self, client: TestApp):
         """Activate account with invalid token."""
@@ -113,5 +120,104 @@ class TestActivate:
         with freeze_time("2022-01-01 00:00:00"):
             token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT, 10)
         with freeze_time("2022-01-01 00:11:00"):
-            client.get(url_for("account.activate", token=token)).follow()
-            # assert "<title>Login - Flask Login</title>" in res
+            res = client.get(url_for("account.activate", token=token)).follow()
+            print(res)
+            assert "<title>Login - Flask Login</title>" in res
+
+
+class TestLoginPage:
+    """Account login page."""
+
+    # Constant password for tests.
+    password = "Pass123$"
+
+    @pytest.fixture(name="form")
+    def fixture_form(self, client: TestApp, user: User):
+        """Form fixture with filled in user values."""
+        user.update(password=self.password, is_active=True)
+        res = client.get(url_for("account.login"))
+        form = res.forms["loginForm"]
+        form["username"] = user.username
+        form["password"] = self.password
+        return form
+
+    def test_username_not_taken(self, form):
+        """Submit form with username that is not taken."""
+        form["username"] = "random"
+        res = form.submit().follow()
+        assert "Invalid username or password" in res
+
+    def test_password_incorrect(self, form):
+        """Submit form with incorrect password for a registered
+        account.
+        """
+        form["password"] = "incorrect"
+        res = form.submit().follow()
+        assert "Invalid username or password" in res
+
+    def test_already_logged_in(self, form, client):
+        """Visit page when account had already logged in."""
+        res = form.submit().follow()
+        res = client.get(url_for("account.login")).follow()
+        assert "<title>Home - Flask Login</title>" in res
+
+    def test_username_password_valid(self, form):
+        """Submit form with correct username and password."""
+        res = form.submit().follow()
+        assert "<title>Home - Flask Login</title>" in res
+
+    def test_login_success_email(self, form, user: User):
+        """Submit form with correct email and password."""
+        form["username"] = user.email
+        res = form.submit().follow()
+        assert "<title>Home - Flask Login</title>" in res
+
+    def test_inactive_account(self, form, user: User):
+        """Submit form with inactive account username."""
+        user.update(is_active=False)
+        res = form.submit().follow()
+        assert "Your account is not activated." in res
+
+    def test_fail_on_last_attempt(self, form, user: User):
+        """Submit form and fail to login on last attempt."""
+        user.login_attempt = MAX_LOGIN_ATTEMPTS - 1
+        form["password"] = "incorrect"
+        res = form.submit().follow()
+        message = "Your account has been locked due to too many failed login attempts."
+        assert message in res
+
+    def test_account_locked(self, form, user: User):
+        """Submit form for a locked account."""
+        user.lock()
+        res = form.submit().follow()
+        message = "Your account has been locked due to too many failed login attempts."
+        assert message in res
+
+
+class TestLogout:
+    """Account logout."""
+
+    password = "Pass123$"
+
+    @pytest.fixture(name="form")
+    def fixture_form(self, client: TestApp, user: User):
+        """Form fixture with filled in user values."""
+        user.update(password=self.password, is_active=True)
+        res = client.get(url_for("account.login"))
+        form = res.forms["loginForm"]
+        form["username"] = user.username
+        form["password"] = self.password
+        return form
+
+    def test_logged_in_account(self, form, client):
+        """Logout a currently logged in account."""
+        res = form.submit().follow()
+        res = client.post(url_for("account.logout")).follow()
+        assert "You have successfully logged out." in res
+        assert "<title>Login - Flask Login</title>" in res
+
+    def test_not_logged_in(self, client):
+        """Logout when not logged in."""
+        res = client.post(url_for("account.logout")).follow()
+        assert "You have successfully logged out." not in res
+        assert "<title>Login - Flask Login</title>" in res

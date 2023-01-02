@@ -1,0 +1,8 @@
+Hi {{ user.first_name }} {{ user.last_name }},
+
+Your account has been locked for {{ lock_duration }} minutes due to multiple failed
+login attempts. If this was not you, please change your password to a secure password
+as someone may be trying to breach your account.
+
+Regards,
+Flask Login.
