@@ -14,7 +14,7 @@ from flask import (
     session,
     url_for,
 )
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from jwt.exceptions import DecodeError, ExpiredSignatureError, InvalidTokenError
 
 from src.extensions import login_manager
@@ -128,3 +128,12 @@ def login_post():
     flash("You have successfully logged in.", "success")
     redirect_url = request.args.get("next") or url_for("public.home")
     return redirect(redirect_url)
+
+
+@blueprint.route("/logout", methods=["POST"])
+def logout():
+    """Account sign out request."""
+    if current_user.is_authenticated:
+        flash("You have successfully logged out.", "success")
+    logout_user()
+    return redirect(url_for("account.login"))

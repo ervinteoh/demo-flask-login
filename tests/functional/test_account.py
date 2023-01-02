@@ -192,3 +192,32 @@ class TestLoginPage:
         res = form.submit().follow()
         message = "Your account has been locked due to too many failed login attempts."
         assert message in res
+
+
+class TestLogout:
+    """Account logout."""
+
+    password = "Pass123$"
+
+    @pytest.fixture(name="form")
+    def fixture_form(self, client: TestApp, user: User):
+        """Form fixture with filled in user values."""
+        user.update(password=self.password, is_active=True)
+        res = client.get(url_for("account.login"))
+        form = res.forms["loginForm"]
+        form["username"] = user.username
+        form["password"] = self.password
+        return form
+
+    def test_logged_in_account(self, form, client):
+        """Logout a currently logged in account."""
+        res = form.submit().follow()
+        res = client.post(url_for("account.logout")).follow()
+        assert "You have successfully logged out." in res
+        assert "<title>Login - Flask Login</title>" in res
+
+    def test_not_logged_in(self, client):
+        """Logout when not logged in."""
+        res = client.post(url_for("account.logout")).follow()
+        assert "You have successfully logged out." not in res
+        assert "<title>Login - Flask Login</title>" in res
