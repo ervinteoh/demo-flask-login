@@ -14,12 +14,12 @@ from flask import (
     session,
     url_for,
 )
-from flask_login import current_user
+from flask_login import current_user, login_user
 from jwt.exceptions import DecodeError, ExpiredSignatureError, InvalidTokenError
 
 from src.extensions import login_manager
 from src.models import User, UserToken
-from src.services.form import RegisterForm
+from src.services.form import LoginForm, RegisterForm
 
 blueprint = Blueprint("account", __name__, url_prefix="/account")
 
@@ -82,7 +82,7 @@ def register_post():
     url = request.host_url.rstrip("/") + url_for("account.activate", token=token)
     user.send_mail("Activate your account", "account/activate", url=url)
     flash("An email has been sent to your inbox to activate your account.", "info")
-    return redirect(url_for("public.home"))
+    return redirect(url_for("account.login"))
 
 
 @blueprint.route("/activate/<string:token>")
@@ -94,8 +94,37 @@ def activate(token):
     except ExpiredSignatureError:
         message = "Activation link has expired. Please contact the administrator."
         flash(message, "danger")
-        return redirect(url_for("public.home"))
+        return redirect(url_for("account.login"))
     except (DecodeError, InvalidTokenError):
         abort(404)
     flash("Your account has been successfully activated.", "success")
-    return redirect(url_for("public.home"))
+    return redirect(url_for("account.login"))
+
+
+@blueprint.route("/login")
+@logged_in_redirect
+def login():
+    """Account login page."""
+    form = LoginForm()
+    return render_template("pages/auth/login.jinja", form=form)
+
+
+@blueprint.route("/login", methods=["POST"])
+@logged_in_redirect
+def login_post():
+    """Account login post request."""
+    form = LoginForm()
+    if not form.validate_on_submit():
+        message = "Invalid username or password"
+        if form.user and not form.user.is_active:
+            message = "Your account is not activated."
+        elif form.user and form.user.is_locked():
+            message = """Your account has been locked due to too \
+            many failed login attempts."""
+        flash(message, "danger")
+        return redirect(url_for("account.login"))
+
+    login_user(form.user, remember=True)
+    flash("You have successfully logged in.", "success")
+    redirect_url = request.args.get("next") or url_for("public.home")
+    return redirect(redirect_url)

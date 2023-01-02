@@ -1,0 +1,36 @@
+{% from "includes/scripts.jinja" import input, checkbox with context %}
+{% extends "layouts/auth.jinja" %}
+{% set title = "Login" %}
+{% set heading = "Sign In" %}
+
+{% block form %}
+<div class="w-full max-w-lg px-6 mb-4">
+  {% include "includes/flash_alerts.jinja" %}
+</div>
+<form action="" id="loginForm" method="POST" class="w-full max-w-lg px-6">
+  {{ form.csrf_token }}
+  <div class="mb-6">
+    {{ input(form.username) }}
+  </div>
+  <div class="mb-6">
+    {{ input(form.password) }}
+  </div>
+  <div class="flex flex-wrap justify-between gap-6 mb-6">
+    <div class="whitespace-nowrap">
+      {{ checkbox(form.remember) }}
+    </div>
+    <div class="whitespace-nowrap">
+      <a href="/">Forgot Password?</a>
+    </div>
+  </div>
+  {{ form.submit(class_="w-full my-4") }}
+  <a href="" class="w-full mb-4 btn btn-outline-secondary">Sign in with Google</a>
+</form>
+{% endblock form %}
+
+{% block footnote %}
+<p class="text-sm lg:text-base">
+  Don't have an account?
+  <a href="{{ url_for('account.register') }}">Sign Up</a>
+</p>
+{% endblock footnote %}
