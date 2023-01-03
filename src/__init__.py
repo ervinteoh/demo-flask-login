@@ -40,7 +40,7 @@ def create_app() -> Flask:
     register_extensions(app)
     register_blueprints(app)
     register_shellcontext(app)
-    # register_errorhandlers(app)
+    register_errorhandlers(app)
 
     return app
 
