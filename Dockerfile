@@ -26,4 +26,4 @@ COPY ./src ./src
 COPY --from=tailwindcss /usr/src/app/src/static/dist ./src/static/dist
 
 RUN flask db upgrade
-CMD ["gunicorn", "-b", "0.0.0.0:80", "-w", "4", "src:create_app()"]
+CMD ["gunicorn", "--workers", "1", "--threads", "3", "-b", "0.0.0.0:80", "-w", "4", "src:create_app()"]
