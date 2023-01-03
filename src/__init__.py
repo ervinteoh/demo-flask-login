@@ -106,7 +106,7 @@ def register_errorhandlers(app: Flask):
         current_app.logger.exception(error)
         return render_template("pages/error/500.jinja"), 500
 
-    for code in [400, 401, 403, 404, 405, 502, 503, 504]:
+    for code in [401, 403, 404, 405, 502, 503, 504]:
         app.errorhandler(code)(render_error)
 
     app.register_error_handler(Exception, handle_exception)
