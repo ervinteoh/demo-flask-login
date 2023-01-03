@@ -54,7 +54,7 @@ def register_extensions(app: Flask):
     """
     extensions.bcrypt.init_app(app)
     extensions.db.init_app(app)
-    extensions.csrf_protect.init_app(app)
+    # extensions.csrf_protect.init_app(app)
     extensions.login_manager.init_app(app)
     extensions.migrate.init_app(app, extensions.db)
     extensions.mail.init_app(app)
