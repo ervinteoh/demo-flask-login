@@ -101,6 +101,9 @@ class DebugConfig(BaseConfig):
     #: Set the database URI to a development database.
     DATABASE_URI = os.path.join(WORKING_DIR, "development.sqlite")
 
+    #: Disable CSRF protection for easier API development.
+    WTF_CSRF_ENABLED = False
+
 
 class TestingConfig(BaseConfig):
     """This is a subclass of :class:`BaseConfig` where each base
@@ -115,6 +118,9 @@ class TestingConfig(BaseConfig):
     #: Application environment set to TESTING.
     TESTING = True
 
+    #: Disable CSRF protection for easier API development.
+    WTF_CSRF_ENABLED = False
+
 
 class ReleaseConfig(BaseConfig):
     """This is a subclass of :class:`BaseConfig` where each base
@@ -127,6 +133,9 @@ class ReleaseConfig(BaseConfig):
 
     # Flask Mail server default to mail trap url.
     MAIL_SERVER = os.environ.get("MAIL_SERVER", "send.smtp.mailtrap.io")
+
+    #: Disable CSRF protection for easier API development.
+    WTF_CSRF_ENABLED = False
 
 
 def get_config():

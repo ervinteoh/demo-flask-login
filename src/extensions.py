@@ -12,10 +12,17 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 
 #: Flask-Bcrypt is a Flask extension that provides bcrypt hashing
 #: utilities for your application.
 bcrypt = Bcrypt()
+
+#: Cross-Site Request Forgery (CSRF) is an attack that forces
+#: authenticated users to submit a request to a Web application against
+#: which they are currently authenticated. CSRFProtect enables CSRF
+#: protection globally across the Flask application.
+csrf_protect = CSRFProtect()
 
 #: SQLAlchemy is the Python SQL toolkit and Object Relational Mapper
 #: that gives application developers the full power and flexibility of

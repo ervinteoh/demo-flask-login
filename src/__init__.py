@@ -40,7 +40,7 @@ def create_app() -> Flask:
     register_extensions(app)
     register_blueprints(app)
     register_shellcontext(app)
-    register_errorhandlers(app)
+    # register_errorhandlers(app)
 
     return app
 
@@ -54,6 +54,7 @@ def register_extensions(app: Flask):
     """
     extensions.bcrypt.init_app(app)
     extensions.db.init_app(app)
+    extensions.csrf_protect.init_app(app)
     extensions.login_manager.init_app(app)
     extensions.migrate.init_app(app, extensions.db)
     extensions.mail.init_app(app)
