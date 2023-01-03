@@ -2,6 +2,7 @@
 and Contact pages.
 """
 from flask import Blueprint, render_template
+from flask_login import current_user
 
 blueprint = Blueprint("public", __name__)
 
@@ -10,6 +11,7 @@ blueprint = Blueprint("public", __name__)
 @blueprint.route("/")
 def home():
     """Home Page."""
+    print(current_user)
     return render_template("pages/public/home.jinja")
 
 
