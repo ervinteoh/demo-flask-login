@@ -13,7 +13,6 @@ from flask import (
     request,
     session,
     url_for,
-    current_app
 )
 from flask_login import current_user, login_user, logout_user
 from jwt.exceptions import DecodeError, ExpiredSignatureError, InvalidTokenError
@@ -34,7 +33,6 @@ def load_user(user_id):
     :return: The user instance of the current session.
     :rtype: User
     """
-    current_app.logger.info(user_id)
     return User.get_by_id(user_id)
 
 
