@@ -13,9 +13,8 @@ RUN npm run build
 FROM python:3.9-alpine
 
 WORKDIR /usr/src/app
-COPY ./.env* ./.env
 
-COPY requirements.txt requirements.txt
+COPY requirements.txt .env* ./
 RUN apk add --no-cache postgresql-libs && \
     apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev && \
     pip install -r requirements.txt
