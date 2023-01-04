@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    entrypoint: ["gunicorn", "-b", "0.0.0.0:5000", "-w", "4", "src:create_app()"]
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://test:test@db/test
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - default
+    ports:
+      - 5000:5000
+    volumes:
+      - ./src:/usr/src/app/app
+      - ./migrations:/usr/src/app/migrations
+    restart: always
+
+  db:
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+    image: postgres:latest
+    networks:
+      - default
+    ports:
+      - 5405:5432
+    restart: always
+    volumes:
+      - /.docker/postgres-data:/var/lib/postgresql/data
