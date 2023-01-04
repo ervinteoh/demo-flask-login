@@ -5,7 +5,7 @@
 
 {% block form %}
 <form action="" id="registerForm" method="POST" class="w-full max-w-lg px-6 mt-6">
-  {# {{ form.csrf_token }} #}
+  {{ form.csrf_token }}
   <div class="mb-6">
     {{ input(form.username) }}
   </div>

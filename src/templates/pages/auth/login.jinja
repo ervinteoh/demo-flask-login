@@ -8,7 +8,7 @@
   {% include "includes/flash_alerts.jinja" %}
 </div>
 <form action="" id="loginForm" method="POST" class="w-full max-w-lg px-6">
-  {# {{ form.csrf_token }} #}
+  {{ form.csrf_token }}
   <div class="mb-6">
     {{ input(form.username) }}
   </div>

@@ -15,7 +15,7 @@
       <div class="flex-auto text-right">
         {% if current_user.is_authenticated %}
         <form action="{{ url_for('account.logout') }}" method="POST">
-          {# <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> #}
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button type="submit" name="submit" class="btn btn-primary">Sign Out</button>
         </form>
         {% else %}
