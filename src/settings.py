@@ -89,7 +89,8 @@ class BaseConfig(ABC):
         :return: The Database URI.
         :rtype: str
         """
-        return os.environ.get("DATABASE_URL", f"sqlite:///{self.DATABASE_URI}")
+        database_url = os.environ.get("DATABASE_URL")
+        return database_url or f"sqlite:///{self.DATABASE_URI}"
 
 
 class DebugConfig(BaseConfig):

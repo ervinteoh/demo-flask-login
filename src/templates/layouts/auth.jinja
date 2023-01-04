@@ -3,7 +3,7 @@
 {% block body %}
 <main id="page-{{ title|lower|replace(' ', '-') }}" class="flex">
   <section class="flex-col justify-between flex-1 hidden min-h-screen py-8
-      overflow-hiddenbg-primary-50 lg:flex">
+      overflow-hidden bg-primary-50 lg:flex">
     <div class="h-20 px-10">
       <a href="/" class="inline-flex items-center gap-x-4">
         <object data="{{ url_for('static', filename='img/logo/company.svg') }}"

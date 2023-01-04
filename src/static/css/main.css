@@ -75,6 +75,10 @@
     @apply list-decimal;
   }
 
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }
+
   input:not([type="submit"]):not([type="checkbox"]) {
     @apply bg-neutral-50;
     @apply border;
@@ -220,6 +224,7 @@
     transition: 0.4s ease border;
   }
 
+  input:-webkit-autofill ~ label,
   .form-control > input:focus ~ label,
   .form-control > input[active] ~ label {
     @apply -top-3;
@@ -231,6 +236,7 @@
     transition: 0.4s ease all;
   }
 
+  input:-webkit-autofill ~ label,
   .form-control > input:not(:focus)[active],
   .form-control > input:not(:focus)[active] ~ label {
     @apply text-neutral-800;
