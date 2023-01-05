@@ -68,6 +68,12 @@ class BaseConfig(ABC):
     #: The folder directory for jinja templates.
     TEMPLATES_FOLDER = "templates"
 
+    #: Google OAuth client identification.
+    GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
+
+    #: Google OAuth client secret.
+    GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
+
     @property
     @abstractmethod
     def DATABASE_URI(self):
