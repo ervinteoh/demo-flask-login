@@ -18,7 +18,7 @@ are used depending on the environment set on ``FLASK_ENV``. Please read
 from flask import Flask, current_app, render_template
 
 from src import extensions, models, settings
-from src.views import account, public
+from src.views import account, google, public
 
 
 def create_app() -> Flask:
@@ -71,6 +71,7 @@ def register_blueprints(app: Flask):
     """
     app.register_blueprint(public.blueprint)
     app.register_blueprint(account.blueprint)
+    app.register_blueprint(google.blueprint)
 
 
 def register_shellcontext(app: Flask):

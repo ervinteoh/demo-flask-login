@@ -24,7 +24,7 @@
     </div>
   </div>
   {{ form.submit(class_="w-full my-4") }}
-  <a href="" class="w-full mb-4 btn btn-outline-secondary">Sign in with Google</a>
+  <a href="{{ url_for('google.authenticate') }}" class="w-full mb-4 btn btn-outline-secondary">Sign in with Google</a>
 </form>
 {% endblock form %}
 
