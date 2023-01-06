@@ -29,16 +29,9 @@ from src.models.user import (
 )
 
 
-class RegisterForm(FlaskForm):
-    """Account registration form."""
+class BasePasswordForm(FlaskForm):
+    """Base password form."""
 
-    username = StringField(
-        "Username",
-        validators=[DataRequired(), Regexp(REGEX_USERNAME, message=ERROR_USERNAME)],
-    )
-    email = EmailField("Email", validators=[DataRequired(), Email(message=ERROR_EMAIL)])
-    first_name = StringField("First Name", validators=[DataRequired()])
-    last_name = StringField("Last Name", validators=[DataRequired()])
     password = PasswordField(
         "Password",
         validators=[
@@ -54,6 +47,18 @@ class RegisterForm(FlaskForm):
             EqualTo("password", message="The passwords do not match each other"),
         ],
     )
+
+
+class RegisterForm(BasePasswordForm):
+    """Account registration form."""
+
+    username = StringField(
+        "Username",
+        validators=[DataRequired(), Regexp(REGEX_USERNAME, message=ERROR_USERNAME)],
+    )
+    email = EmailField("Email", validators=[DataRequired(), Email(message=ERROR_EMAIL)])
+    first_name = StringField("First Name", validators=[DataRequired()])
+    last_name = StringField("Last Name", validators=[DataRequired()])
     submit = SubmitField("Sign Up")
 
     def validate_username(self, username: str):
@@ -124,3 +129,26 @@ class LoginForm(FlaskForm):
             return False
         self.user.update(login_attempt=0)
         return True
+
+
+class ForgotPasswordForm(FlaskForm):
+    """Forgot Password form."""
+
+    email = StringField("Email", validators=[DataRequired(), Email(ERROR_EMAIL)])
+    submit = SubmitField("Search")
+
+    def validate_email(self, email):
+        """Validates email field.
+
+        :param email: The email value.
+        :type email: str
+        :raises ValidationError: The email has not yet been registered.
+        """
+        if User.query.filter_by(email=email.data).first() is None:
+            raise ValidationError("There is no account registered with that email.")
+
+
+class ResetPasswordForm(BasePasswordForm):
+    """Reset password form."""
+
+    submit = SubmitField("Reset Password")
