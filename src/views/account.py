@@ -19,7 +19,12 @@ from jwt.exceptions import DecodeError, ExpiredSignatureError, InvalidTokenError
 
 from src.extensions import login_manager
 from src.models import User, UserToken
-from src.services.form import ForgotPasswordForm, LoginForm, RegisterForm
+from src.services.form import (
+    ForgotPasswordForm,
+    LoginForm,
+    RegisterForm,
+    ResetPasswordForm,
+)
 
 blueprint = Blueprint("account", __name__, url_prefix="/account")
 
@@ -182,4 +187,37 @@ def forgot_password_post():
 @blueprint.route("/password-reset/<string:token>")
 def password_reset(token):
     """Password reset page."""
-    return f"Password reset {token}"
+    try:
+        User.verify_access_token(UserToken.RESET_PASSWORD, token)
+    except ExpiredSignatureError:
+        message = "Password reset link has expired. You can request a new one below."
+        flash(message, "danger")
+        return redirect(url_for("account.forgot_password"))
+    except (DecodeError, InvalidTokenError):
+        abort(404)
+    form = ResetPasswordForm()
+    if "formdata" in session:
+        form = ForgotPasswordForm(**session["formdata"])
+        form.validate()
+        session.pop("formdata")
+    return render_template("pages/auth/password_reset.jinja", form=form)
+
+
+@blueprint.route("/password-reset/<string:token>", methods=["POST"])
+def password_reset_post(token):
+    """Password reset post request."""
+    try:
+        user = User.verify_access_token(UserToken.RESET_PASSWORD, token)
+    except ExpiredSignatureError:
+        message = "Password reset link has expired. You can request a new one below."
+        flash(message, "danger")
+        return redirect(url_for("account.forgot_password"))
+    except (DecodeError, InvalidTokenError):
+        abort(404)
+    form = ResetPasswordForm()
+    if not form.validate_on_submit():
+        session["formdata"] = form.data
+        return redirect(url_for("account.password_reset"))
+    user.update(password=form.password.data)
+    flash("You have successfully reset your password. ", "success")
+    return redirect(url_for("account.login"))
