@@ -121,7 +121,6 @@ class TestActivate:
             token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT, 10)
         with freeze_time("2022-01-01 00:11:00"):
             res = client.get(url_for("account.activate", token=token)).follow()
-            print(res)
             assert "<title>Login - Flask Login</title>" in res
 
 
