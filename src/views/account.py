@@ -19,7 +19,7 @@ from jwt.exceptions import DecodeError, ExpiredSignatureError, InvalidTokenError
 
 from src.extensions import login_manager
 from src.models import User, UserToken
-from src.services.form import LoginForm, RegisterForm
+from src.services.form import ForgotPasswordForm, LoginForm, RegisterForm
 
 blueprint = Blueprint("account", __name__, url_prefix="/account")
 
@@ -148,3 +148,38 @@ def send_activation(user_id):
     user.send_mail("Activate your account", "account/activate", url=url)
     flash("An email has been sent to your inbox to activate your account.", "info")
     return redirect(url_for("account.login"))
+
+
+@blueprint.route("/forgot-password")
+def forgot_password():
+    """Forgot password page."""
+    form = ForgotPasswordForm()
+    if "formdata" in session:
+        form = ForgotPasswordForm(**session["formdata"])
+        form.validate()
+        session.pop("formdata")
+    return render_template("pages/auth/forgot_password.jinja", form=form)
+
+
+@blueprint.route("/forgot-password", methods=["POST"])
+def forgot_password_post():
+    """Forgot password post request."""
+    form = ForgotPasswordForm()
+    if not form.validate_on_submit():
+        session["formdata"] = form.data
+        return redirect(url_for("account.forgot_password"))
+
+    user: User = User.query.filter_by(email=form.email.data).first()
+    token = user.get_access_token(UserToken.RESET_PASSWORD)
+    url = request.host_url.rstrip("/") + url_for("account.password_reset", token=token)
+    user.send_mail(
+        "Password Reset", "account/password_reset", url=url, token_duration=120
+    )
+    flash("We have sent a password reset link to your email.", "info")
+    return redirect(url_for("account.forgot_password"))
+
+
+@blueprint.route("/password-reset/<string:token>")
+def password_reset(token):
+    """Password reset page."""
+    return f"Password reset {token}"

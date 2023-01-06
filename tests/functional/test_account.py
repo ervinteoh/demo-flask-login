@@ -166,7 +166,7 @@ class TestLoginPage:
         res = form.submit().follow()
         assert "<title>Home - Flask Login</title>" in res
 
-    def test_login_success_email(self, form, user: User):
+    def test_login_email_valid(self, form, user: User):
         """Submit form with correct email and password."""
         form["username"] = user.email
         res = form.submit().follow()
@@ -221,3 +221,39 @@ class TestLogout:
         res = client.post(url_for("account.logout")).follow()
         assert "You have successfully logged out." not in res
         assert "<title>Login - Flask Login</title>" in res
+
+
+class TestForgotPassword:
+    """Forgot password page."""
+
+    @pytest.fixture(name="form")
+    def fixture_form(self, client: TestApp, user: User):
+        """Form fixture with filled in user values."""
+        res = client.get(url_for("account.forgot_password"))
+        form = res.forms["forgotPasswordForm"]
+        form["email"] = user.email
+        return form
+
+    def test_email_not_taken(self, form):
+        """Submit form with email that is not taken."""
+        form["email"] = "invalid@invalid.com"
+        res = form.submit().follow()
+        assert "There is no account registered with that email." in res
+
+    def test_email_field_empty(self, form):
+        """Submit form with email field left empty."""
+        form["email"] = ""
+        res = form.submit().follow()
+        assert "This field is required." in res
+
+    def test_email_invalid(self, form):
+        """Submit form with invalid email."""
+        form["email"] = "this_is_not_an_email"
+        res = form.submit().follow()
+        assert ERROR_EMAIL in res
+
+    def test_email_valid(self, form):
+        """Submit form with valid email."""
+        res = form.submit().follow()
+        assert "<title>Forgot Password - Flask Login</title>" in res
+        assert "We have sent a password reset link to your email." in res
