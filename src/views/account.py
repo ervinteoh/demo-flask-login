@@ -211,7 +211,7 @@ def password_reset(token):
         return redirect(url_for("account.forgot_password"))
     form = ResetPasswordForm()
     if "formdata" in session:
-        form = ForgotPasswordForm(**session["formdata"])
+        form = ResetPasswordForm(**session["formdata"])
         form.validate()
         session.pop("formdata")
     return render_template("pages/auth/password_reset.jinja", form=form)
@@ -227,7 +227,7 @@ def password_reset_post(token):
     form = ResetPasswordForm()
     if not form.validate_on_submit():
         session["formdata"] = form.data
-        return redirect(url_for("account.password_reset"))
+        return redirect(url_for("account.password_reset", token=token))
     user.update(password=form.password.data)
     flash("You have successfully reset your password. ", "success")
     return redirect(url_for("account.login"))
