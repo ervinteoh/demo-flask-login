@@ -7,7 +7,12 @@ import pytest
 
 from src.database import db
 from src.models.user import ERROR_EMAIL, ERROR_PASSWORD, ERROR_USERNAME, User
-from src.services.form import LoginForm, RegisterForm
+from src.services.form import (
+    ForgotPasswordForm,
+    LoginForm,
+    RegisterForm,
+    ResetPasswordForm,
+)
 from tests.factories import UserFactory
 
 
@@ -167,3 +172,72 @@ class TestLoginForm:
         form.username.data = user.email
         assert form.validate()
         assert form.user == user
+
+
+@pytest.mark.usefixtures("db")
+class TestForgotPasswordForm:
+    """Forgot password form."""
+
+    def test_email_not_taken(self):
+        """Search a non-taken username."""
+        form = ForgotPasswordForm(email="unregistered@gmail.com")
+        expected = "There is no account registered with that email."
+        assert form.validate() is False
+        assert expected in form.email.errors
+
+    @pytest.mark.parametrize("email", ["foo", "foo@", "foo@bar", "foo@bar."])
+    def test_email_invalid_format(self, email):
+        """Submit form with invalid email."""
+        form = ForgotPasswordForm(email=email)
+        assert form.validate() is False
+        assert ERROR_EMAIL in form.email.errors
+
+    def test_email_valid(self, user):
+        """Submit form with valid email."""
+        form = ForgotPasswordForm(email=user.email)
+        assert form.validate()
+
+
+@pytest.mark.usefixtures("app")
+class TestResetPasswordForm:
+    """Reset password form."""
+
+    # pylint: disable=too-few-public-methods
+
+    password = "Pass123$"
+
+    @pytest.mark.parametrize("password", ["P123$", "pass123$", "password$", "pass1234"])
+    def test_password_weak_combination(self, password):
+        """Submit form with weak password."""
+        form = ResetPasswordForm(password=password, confirm_password=password)
+        assert form.validate() is False
+        assert ERROR_PASSWORD in form.password.errors
+
+    def test_password_too_long(self):
+        """Submit form with password exceeding maximum characters."""
+        password = self.password * 31
+        form = ResetPasswordForm(password=password, confirm_password=password)
+        assert form.validate() is False
+        assert "Field must be between 8 and 30 characters long." in form.password.errors
+
+    def test_password_too_short(self):
+        """Submit form with password is below the required minimum
+        character.
+        """
+        password = "Pa1$"
+        form = ResetPasswordForm(password=password, confirm_password=password)
+        assert form.validate() is False
+        assert "Field must be between 8 and 30 characters long." in form.password.errors
+
+    def test_confirm_password_on_mismatch(self):
+        """Submit form with mismatching password between the fields
+        Password and Confirm Password.
+        """
+        form = ResetPasswordForm(password=self.password, confirm_password="Random123!")
+        assert form.validate() is False
+        assert "The passwords do not match each other" in form.confirm_password.errors
+
+    def test_reset_password_success(self):
+        """Reset password success."""
+        form = ResetPasswordForm(password=self.password, confirm_password=self.password)
+        assert form.validate() is True

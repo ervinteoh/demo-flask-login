@@ -110,7 +110,6 @@ class TestUserModel:
     def test_get_access_token(self, user: User, token_type):
         """Get access token."""
         token = user.get_access_token(getattr(UserToken, token_type), 10)
-        print(decode_token(token))
         assert decode_token(token)["sub"] == str(user.id)
         assert decode_token(token)["token_type"] == token_type
 

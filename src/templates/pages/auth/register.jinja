@@ -4,7 +4,7 @@
 {% set heading = "Sign Up" %}
 
 {% block form %}
-<form action="" id="registerForm" method="POST" class="w-full max-w-lg px-6 mt-6">
+<form action="" id="registerForm" method="POST" class="w-full max-w-lg mt-4 px-6">
   {{ form.csrf_token }}
   <div class="mb-6">
     {{ input(form.username) }}
@@ -26,8 +26,9 @@
   <div class="mb-6">
     {{ input(form.confirm_password) }}
   </div>
-  {{ form.submit(class_="w-full my-4") }}
-  <a href="{{ url_for('google.authenticate') }}" class="w-full mb-4 btn btn-outline-secondary">Sign up with Google</a>
+  {{ form.submit(class_="w-full mb-4") }}
+  <a href="{{ url_for('google.authenticate') }}"
+    class="w-full mb-4 btn btn-outline-secondary">Sign up with Google</a>
 </form>
 {% endblock form %}
 

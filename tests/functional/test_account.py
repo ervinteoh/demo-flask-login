@@ -121,7 +121,6 @@ class TestActivate:
             token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT, 10)
         with freeze_time("2022-01-01 00:11:00"):
             res = client.get(url_for("account.activate", token=token)).follow()
-            print(res)
             assert "<title>Login - Flask Login</title>" in res
 
 
@@ -166,7 +165,7 @@ class TestLoginPage:
         res = form.submit().follow()
         assert "<title>Home - Flask Login</title>" in res
 
-    def test_login_success_email(self, form, user: User):
+    def test_login_email_valid(self, form, user: User):
         """Submit form with correct email and password."""
         form["username"] = user.email
         res = form.submit().follow()
@@ -183,20 +182,21 @@ class TestLoginPage:
         user.login_attempt = MAX_LOGIN_ATTEMPTS - 1
         form["password"] = "incorrect"
         res = form.submit().follow()
-        message = "Your account has been locked due to too many failed login attempts."
+        message = "Your account has been locked due to multiple failed login attempts."
         assert message in res
 
     def test_account_locked(self, form, user: User):
         """Submit form for a locked account."""
         user.lock()
         res = form.submit().follow()
-        message = "Your account has been locked due to too many failed login attempts."
+        message = "Your account has been locked due to multiple failed login attempts."
         assert message in res
 
 
 class TestLogout:
     """Account logout."""
 
+    # Constant password for tests.
     password = "Pass123$"
 
     @pytest.fixture(name="form")
@@ -221,3 +221,76 @@ class TestLogout:
         res = client.post(url_for("account.logout")).follow()
         assert "You have successfully logged out." not in res
         assert "<title>Login - Flask Login</title>" in res
+
+
+class TestForgotPassword:
+    """Forgot password page."""
+
+    @pytest.fixture(name="form")
+    def fixture_form(self, client: TestApp, user: User):
+        """Form fixture with filled in user values."""
+        res = client.get(url_for("account.forgot_password"))
+        form = res.forms["forgotPasswordForm"]
+        form["email"] = user.email
+        return form
+
+    def test_email_not_taken(self, form):
+        """Submit form with email that is not taken."""
+        form["email"] = "invalid@invalid.com"
+        res = form.submit().follow()
+        assert "There is no account registered with that email." in res
+
+    def test_email_field_empty(self, form):
+        """Submit form with email field left empty."""
+        form["email"] = ""
+        res = form.submit().follow()
+        assert "This field is required." in res
+
+    def test_email_invalid(self, form):
+        """Submit form with invalid email."""
+        form["email"] = "this_is_not_an_email"
+        res = form.submit().follow()
+        assert ERROR_EMAIL in res
+
+    def test_email_valid(self, form):
+        """Submit form with valid email."""
+        res = form.submit().follow()
+        assert "<title>Forgot Password - Flask Login</title>" in res
+        assert "We have sent a password reset link to your email." in res
+
+
+class TestPasswordReset:
+    """Password reset page."""
+
+    # Constant password for tests.
+    password = "Pass123$"
+
+    @pytest.fixture
+    def form(self, client, user):
+        """Form fixture."""
+        token = user.get_access_token(UserToken.RESET_PASSWORD)
+        res = client.get(url_for("account.password_reset", token=token))
+        form = res.forms["passwordResetForm"]
+        form["password"] = self.password
+        form["confirm_password"] = self.password
+        return form
+
+    def test_password_weak(self, form):
+        """Submit form with a weak password."""
+        form["password"] = "weakpassword"
+        form["confirm_password"] = "weakpassword"
+        res = form.submit().follow()
+        assert ERROR_PASSWORD in res
+
+    def test_confirm_password_mismatch(self, form):
+        """Submit form with mismatching passwords."""
+        form["confirm_password"] = "Mismatch123!"
+        res = form.submit().follow()
+        assert "The passwords do not match each other" in res
+
+    def test_password_valid(self, form):
+        """Submit form with valid values."""
+        res = form.submit().follow()
+        assert User.query.one().check_password(self.password)
+        assert "<title>Login - Flask Login</title>" in res
+        assert "You have successfully reset your password." in res
