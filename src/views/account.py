@@ -42,16 +42,37 @@ def load_user(user_id):
 
 
 def logged_in_redirect(function):
-    """Decorator to redirect pages if current user is authenticated."""
+    """Redirect on logged in sessions."""
 
     @wraps(function)
     def decorated_function(*args, **kwargs):
-        if current_user.is_authenticated:
-            flash("You are already logged in.", "success")
-            return redirect(url_for("public.home"))
-        return function(*args, **kwargs)
+        if not current_user.is_authenticated:
+            return function(*args, **kwargs)
+        flash("You are already logged in.", "success")
+        return redirect(url_for("public.home"))
 
     return decorated_function
+
+
+def verify_token(token, token_type, message) -> User:
+    """Verify access token.
+
+    :param token: The JWT access token.
+    :type token: str
+    :param token_type: The user token type.
+    :type token_type: UserToken
+    :param message: The error message on expired.
+    :type message: str
+    :return: The user found on token verification.
+    :rtype: User
+    """
+    try:
+        user = User.verify_access_token(token_type, token)
+    except ExpiredSignatureError:
+        return flash(message, "danger")
+    except (DecodeError, InvalidTokenError):
+        abort(404)
+    return user
 
 
 @blueprint.route("/register")
@@ -90,16 +111,12 @@ def register_post():
 @blueprint.route("/activate/<string:token>")
 def activate(token):
     """Email verification."""
-    try:
-        user = User.verify_access_token(UserToken.ACTIVATE_ACCOUNT, token)
+    expired_message = "Activation link has expired."
+    success_message = "Your account has been successfully activated."
+    user = verify_token(token, UserToken.ACTIVATE_ACCOUNT, expired_message)
+    if user is not None:
         user.update(is_active=True)
-    except ExpiredSignatureError:
-        message = "Activation link has expired. Please contact the administrator."
-        flash(message, "danger")
-        return redirect(url_for("account.login"))
-    except (DecodeError, InvalidTokenError):
-        abort(404)
-    flash("Your account has been successfully activated.", "success")
+        flash(success_message, "success")
     return redirect(url_for("account.login"))
 
 
@@ -116,23 +133,24 @@ def login():
 def login_post():
     """Account login post request."""
     form = LoginForm()
-    if not form.validate_on_submit():
-        message = "Invalid username or password"
-        if form.user and not form.user.is_active:
-            activation_link = url_for("account.send_activation", user_id=form.user.id)
-            message = "Your account is not activated."
-            message += f"""<br><a href="{activation_link}">
-            Click here to resend your activation email.</a>"""
-        elif form.user and form.user.is_locked():
-            message = """Your account has been locked due to too \
-            many failed login attempts."""
-        flash(message, "danger")
-        return redirect(url_for("account.login"))
+    if form.validate_on_submit():
+        login_user(form.user, remember=True)
+        flash("You have successfully logged in.", "success")
+        redirect_url = request.args.get("next") or url_for("public.home")
+        return redirect(redirect_url)
 
-    login_user(form.user, remember=True)
-    flash("You have successfully logged in.", "success")
-    redirect_url = request.args.get("next") or url_for("public.home")
-    return redirect(redirect_url)
+    message = "Invalid username or password"
+    if form.user and not form.user.is_active:
+        endpoint = "account.send_activation"
+        activation_url = url_for(endpoint, user_id=form.user.id)
+        message = "Click here to resend your activation email."
+        html_link = f"""<a href="{activation_url}">{message}</a>"""
+        message = f"Your account is not activated.<br>{html_link}"
+    elif form.user and form.user.is_locked():
+        message = """Your account has been locked due to multiple\
+        failed login attempts."""
+    flash(message, "danger")
+    return redirect(url_for("account.login"))
 
 
 @blueprint.route("/logout", methods=["POST"])
@@ -187,14 +205,10 @@ def forgot_password_post():
 @blueprint.route("/password-reset/<string:token>")
 def password_reset(token):
     """Password reset page."""
-    try:
-        User.verify_access_token(UserToken.RESET_PASSWORD, token)
-    except ExpiredSignatureError:
-        message = "Password reset link has expired. You can request a new one below."
-        flash(message, "danger")
+    expired_message = "Password reset link has expired."
+    user = verify_token(token, UserToken.RESET_PASSWORD, expired_message)
+    if user is None:
         return redirect(url_for("account.forgot_password"))
-    except (DecodeError, InvalidTokenError):
-        abort(404)
     form = ResetPasswordForm()
     if "formdata" in session:
         form = ForgotPasswordForm(**session["formdata"])
@@ -206,14 +220,10 @@ def password_reset(token):
 @blueprint.route("/password-reset/<string:token>", methods=["POST"])
 def password_reset_post(token):
     """Password reset post request."""
-    try:
-        user = User.verify_access_token(UserToken.RESET_PASSWORD, token)
-    except ExpiredSignatureError:
-        message = "Password reset link has expired. You can request a new one below."
-        flash(message, "danger")
+    expired_message = "Password reset link has expired."
+    user = verify_token(token, UserToken.RESET_PASSWORD, expired_message)
+    if user is None:
         return redirect(url_for("account.forgot_password"))
-    except (DecodeError, InvalidTokenError):
-        abort(404)
     form = ResetPasswordForm()
     if not form.validate_on_submit():
         session["formdata"] = form.data

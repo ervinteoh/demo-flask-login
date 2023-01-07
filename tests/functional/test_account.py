@@ -182,14 +182,14 @@ class TestLoginPage:
         user.login_attempt = MAX_LOGIN_ATTEMPTS - 1
         form["password"] = "incorrect"
         res = form.submit().follow()
-        message = "Your account has been locked due to too many failed login attempts."
+        message = "Your account has been locked due to multiple failed login attempts."
         assert message in res
 
     def test_account_locked(self, form, user: User):
         """Submit form for a locked account."""
         user.lock()
         res = form.submit().follow()
-        message = "Your account has been locked due to too many failed login attempts."
+        message = "Your account has been locked due to multiple failed login attempts."
         assert message in res
 
 
