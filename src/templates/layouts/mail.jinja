@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!--[if mso]>
+    <noscript>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    </noscript>
+  <![endif]-->
+  <style>
+    /* 
+    *  CSS TABLE OF CONTENTS
+    *  
+    *  1.0 - Reset
+    *  2.0 - Fonts
+    *  3.0 - Header
+    *  4.0 - Body
+    *  5.0 - Components
+    *  6.0 - Footer
+    */
+
+    /*** 1.0 - Reset ***/
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      border: 0 none;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+
+    a img {
+      border: 0 none;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    h1,
+    p,
+    a {
+      margin: 0;
+    }
+
+    /*** 2.0 - Fonts ***/
+    body {
+      color: #07090D;
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    a {}
+
+    .subtitle {
+      color: #2D3748;
+    }
+
+    .small {
+      font-size: 14px;
+      color: #718096;
+    }
+
+    /*** 3.0 - Header ***/
+
+    .header {}
+
+    /*** 4.0 - Body ***/
+
+    .body {
+      background-color: #EDF2F7;
+    }
+
+    .container {
+      display: block;
+      margin: 80px auto !important;
+      padding: 64px 0;
+      width: 600px;
+      background-color: #FBFDFE;
+      border-top: solid 8px #DD6B20;
+    }
+
+    .content {
+      padding: 40px 64px;
+      border-bottom: solid 1px #E2E8F0;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin-bottom: 24px;
+    }
+
+    /*** 5.0 - Components ***/
+
+    button {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      padding: 16px 28px;
+      background-color: #DD6B20;
+      border: none;
+      border-radius: 7px;
+      color: white;
+    }
+
+    /*** 6.0 - Footer ***/
+
+    .footer {
+      padding-top: 40px;
+    }
+
+    .footer p {
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #2D3748;
+    }
+
+  </style>
+</head>
+
+<body style="margin:0;padding:0;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+    <tr>
+      <td align="center" class="container">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td align="center" class="header">
+              <img src="cid:{{ icon }}" width="64" height="64">
+            </td>
+          </tr>
+          <tr>
+            <td align="center" class="content">
+              {% block content %}{% endblock %}
+            </td>
+          </tr>
+          <tr>
+            <td align="center" class="footer">
+              <p>
+                <a>Unsubscribe</a> •
+                <a>Terms</a> •
+                <a>Privacy</a>
+              </p>
+              <p>© 2023 Flask Login. All rights reserved.</p>
+            </td>
+          </tr>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

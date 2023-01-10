@@ -17,7 +17,7 @@ from sqlalchemy.orm import validates
 
 from src.database import PrimaryKeyModel
 from src.extensions import bcrypt
-from src.services import mail
+from src.services.mail import AttachmentIcon, send_mail
 
 #: Username regex matching any string with only letters, numbers
 #: fullstops and underscore.
@@ -46,6 +46,14 @@ MAX_LOGIN_ATTEMPTS = 5
 
 #: The lock duration in minutes.
 LOCK_DURATION = 120
+
+#: Mail template icon attachments.
+MAIL_TEMPLATE_ICON = {
+    "account/welcome": AttachmentIcon("IconEmail", "envelope.png"),
+    "account/activated": AttachmentIcon("IconCheck", "circle-check.png"),
+    "account/locked": AttachmentIcon("IconLock", "lock.png"),
+    "account/password_reset": AttachmentIcon("IconKey", "key.png"),
+}
 
 
 class UserToken(Enum):
@@ -177,12 +185,13 @@ class User(PrimaryKeyModel, UserMixin):
         """
         text = render_template(f"mail/{template}.txt", user=self, *args, **kwargs)
         html = render_template(f"mail/{template}.jinja", user=self, *args, **kwargs)
-        mail.send_mail(
+        send_mail(
             subject,
             sender="support@ervinteoh.com",
             recipients=[self.email],
             text_body=text,
             html_body=html,
+            attachments=[MAIL_TEMPLATE_ICON.get(template)],
         )
 
     def lock(self):
