@@ -87,7 +87,7 @@ class AttachmentIcon(Attachment):
             name=name,
             filename=filename,
             filetype="image/png",
-            directory="img\\icon",
+            directory="img/icon",
             type="inline",
         )
 
