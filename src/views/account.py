@@ -116,6 +116,8 @@ def activate(token):
     user = verify_token(token, UserToken.ACTIVATE_ACCOUNT, expired_message)
     if user is not None:
         user.update(is_active=True)
+        subject = "Your email address has been verified."
+        user.send_mail(subject, "account/activated", url=url_for("account.login"))
         flash(success_message, "success")
     return redirect(url_for("account.login"))
 
@@ -168,7 +170,7 @@ def send_activation(user_id):
     user: User = User.get_by_id(user_id)
     token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT)
     url = request.host_url.rstrip("/") + url_for("account.activate", token=token)
-    subject = "Complete your Flask Login registration"
+    subject = "Welcome to Flask Login, please verify your email address."
     user.send_mail(subject, "account/welcome", url=url)
     flash("An email has been sent to your inbox to activate your account.", "info")
     return redirect(url_for("account.login"))
@@ -196,9 +198,8 @@ def forgot_password_post():
     user: User = User.query.filter_by(email=form.email.data).first()
     token = user.get_access_token(UserToken.RESET_PASSWORD)
     url = request.host_url.rstrip("/") + url_for("account.password_reset", token=token)
-    user.send_mail(
-        "Password Reset", "account/password_reset", url=url, token_duration=120
-    )
+    subject = "Flask Login Password Reset"
+    user.send_mail(subject, "account/password_reset", url=url, token_duration=120)
     flash("We have sent a password reset link to your email.", "info")
     return redirect(url_for("account.forgot_password"))
 

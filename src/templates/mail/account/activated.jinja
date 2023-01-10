@@ -1,0 +1,16 @@
+{% extends "layouts/mail.jinja" %}
+{% set title = "Email Verified" %}
+{% set icon = "IconCheck" %}
+
+
+{% block content %}
+<h1>Account Verified</h1>
+<p class="subtitle">
+  Your email address has been successfully verified.
+  You can now login to your account at our website. 
+</p>
+<a href="{{ url }}">
+  <button>Login to your account</button>
+</a>
+<p>In case you forgot, your username is: {{ user.username }}.</p>
+{% endblock %}
