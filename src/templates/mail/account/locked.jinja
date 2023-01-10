@@ -1,0 +1,19 @@
+{% extends "layouts/mail.jinja" %}
+{% set title = "Account Locked" %}
+{% set icon = "IconLock" %}
+
+
+{% block content %}
+<h1>Your account has been locked</h1>
+<p class="subtitle">
+  Your account has been locked due to too many failed login attempts.
+  Please try again in {{ lock_duration }} minutes.
+</p>
+<p>If you need to reset your password, click the link below:</p>
+<a href="{{ url }}">
+  <button>Reset your password</button>
+</a>
+<p class="small">
+  You can still browse our public pages while you wait.
+</p>
+{% endblock %}

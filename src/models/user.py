@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from enum import Enum, auto
 
 import sqlalchemy as sa
-from flask import render_template
+from flask import render_template, url_for
 from flask_jwt_extended import create_access_token, decode_token
 from flask_login import UserMixin
 from jwt.exceptions import InvalidTokenError
@@ -197,7 +197,12 @@ class User(PrimaryKeyModel, UserMixin):
     def lock(self):
         """Lock the account and sends a notification to the user."""
         self.lock_datetime = datetime.utcnow()
-        self.send_mail("Account Locked", "account/locked", lock_duration=LOCK_DURATION)
+        self.send_mail(
+            "Your account has been locked",
+            "account/locked",
+            lock_duration=LOCK_DURATION,
+            url=url_for("account.forgot_password"),
+        )
 
     def reset_login_attempt(self):
         """Reset the login attempt."""
