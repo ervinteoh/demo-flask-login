@@ -187,7 +187,7 @@ class User(PrimaryKeyModel, UserMixin):
         html = render_template(f"mail/{template}.jinja", user=self, *args, **kwargs)
         send_mail(
             subject,
-            sender="support@ervinteoh.com",
+            sender=("Flask Login", "support@ervinteoh.com"),
             recipients=[self.email],
             text_body=text,
             html_body=html,

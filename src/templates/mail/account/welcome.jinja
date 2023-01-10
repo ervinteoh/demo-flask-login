@@ -1,0 +1,20 @@
+{% extends "layouts/mail.jinja" %}
+{% set title = "Email Verification" %}
+{% set icon = "IconEmail" %}
+
+
+{% block content %}
+<h1>Welcome to Flask Login</h1>
+<p class="subtitle">
+  Thank for you registering an account with us.
+</p>
+<p>Click below to verify your account.</p>
+<a href="{{ url }}">
+  <button>Verify my email address</button>
+</a>
+<p class="small">
+  Didn't create a Flask Login account?
+  It's likely someone just typed in your email address by accident.
+  Feel free to ignore this email.
+</p>
+{% endblock %}

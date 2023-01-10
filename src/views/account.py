@@ -168,7 +168,8 @@ def send_activation(user_id):
     user: User = User.get_by_id(user_id)
     token = user.get_access_token(UserToken.ACTIVATE_ACCOUNT)
     url = request.host_url.rstrip("/") + url_for("account.activate", token=token)
-    user.send_mail("Activate your account", "account/welcome", url=url)
+    subject = "Complete your Flask Login registration"
+    user.send_mail(subject, "account/welcome", url=url)
     flash("An email has been sent to your inbox to activate your account.", "info")
     return redirect(url_for("account.login"))
 

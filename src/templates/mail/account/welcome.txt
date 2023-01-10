@@ -1,12 +1,12 @@
 Hi {{ user.first_name }} {{ user.last_name }},
 
-Thank you for registering an account with us. You will need to activate your account
-before you can log in. Please copy and paste the link below in your browser to activate
-your Data Management GUI account.
-
+Thank you for registering an account with us.
+Click the link below to verify your email address:
 {{ url }}
 
-Incase you've forgotten your username, your username is: "{{ user.username }}".
+Didn't create a Flask Login account?
+It's likely someone just typed in your email address by accident.
+Feel free to ignore this email.
 
 Regards,
 Flask Login.
