@@ -123,15 +123,13 @@
    ```sh
    npm run build
    ```
-4. Create a new file `.env` in the root directory
-   ```
-   FLASK_APP=src:create_app()
-   ```
-5. Install package requirements
+4. Make a copy of the file `.env.example` and rename it to `.env`
+5. Fill in the missing environmental variables in `.env` file
+6. Install package requirements
    ```sh
    pip install -r requirements.txt
    ```
-6. Database Migration
+7. Database Migration
    ```sh
    flask db upgrade
    ```
