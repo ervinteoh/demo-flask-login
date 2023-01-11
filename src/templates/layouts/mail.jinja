@@ -21,22 +21,11 @@
     </noscript>
   <![endif]-->
   <style>
-    /* 
-    *  CSS TABLE OF CONTENTS
-    *  
-    *  1.0 - Reset
-    *  2.0 - Fonts
-    *  3.0 - Header
-    *  4.0 - Body
-    *  5.0 - Components
-    *  6.0 - Footer
-    */
-
-    /*** 1.0 - Reset ***/
-
     body {
       margin: 0;
       padding: 0;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
     }
 
     img {
@@ -52,8 +41,12 @@
     }
 
     table {
+      outline: none;
       border-collapse: collapse;
-      width: 100%;
+      border-spacing: 0;
+      table-layout: auto !important;
+      margin: 0;
+      padding: 0;
     }
 
     h1,
@@ -62,10 +55,10 @@
       margin: 0;
     }
 
-    /*** 2.0 - Fonts ***/
-    body {
+    h1,
+    p {
+      font-size: 16px;
       color: #07090D;
-      font-family: 'Inter', sans-serif;
     }
 
     h1 {
@@ -73,102 +66,92 @@
       font-weight: bold;
     }
 
-    a {}
-
     .subtitle {
+      font-size: 16px;
       color: #2D3748;
     }
 
-    .small {
-      font-size: 14px;
+    .footnote {
       color: #718096;
+      font-size: 14px;
     }
 
-    /*** 3.0 - Header ***/
-
-    /*** 4.0 - Body ***/
-
-    .body {
-      background-color: #EDF2F7;
+    .footer p {
+      font-size: 14px;
+      color: #2D3748;
     }
 
-    .container {
-      display: block;
-      margin: 80px auto !important;
-      padding: 64px 0;
-      width: 600px;
-      background-color: #FBFDFE;
-      border-top: solid 8px #DD6B20;
-      border-radius: 10px;
-    }
-
-    .content {
-      padding: 40px 64px;
-      border-bottom: solid 1px #E2E8F0;
-    }
-
-    h1 {
-      margin-bottom: 8px;
-    }
-
-    p {
-      margin-bottom: 24px;
-    }
-
-    /*** 5.0 - Components ***/
-
-    button {
+    button,
+    .button {
+      display: inline-block;
       font-size: 14px;
       font-weight: 700;
-      margin-bottom: 24px;
       padding: 16px 28px;
       background-color: #DD6B20;
       border: none;
       border-radius: 7px;
-      color: white;
-      cursor: pointer;
+      color: #FBFDFE !important;
+      text-decoration: none;
     }
 
-    /*** 6.0 - Footer ***/
-
-    .footer {
-      padding-top: 40px;
-    }
-
-    .footer p {
-      margin-bottom: 12px;
-      font-size: 14px;
-      color: #2D3748;
+    @media screen and (max-width: 600px) {
+      .content {
+        padding: 40px 24px 40px 24px !important;
+      }
     }
 
   </style>
 </head>
 
 <body style="margin:0;padding:0;">
-  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+
+  {# Body #}
+  <table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#EDF2F7">
     <tr>
-      <td align="center" class="container">
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+      <td align="left" valign="top" style="padding:80px 0 80px 0">
+
+        {# Container #}
+        <table width="600" align="center" cellspacing="0" cellpadding="0" border="0"
+          bgcolor="#FBFDFE" style="width:600px;max-width:600px;margin:0 auto">
           <tr>
-            <td align="center" class="header">
-              <img src="cid:{{ icon }}" width="64" height="64">
+            <td align="left" valign="top"
+              style="padding:64px 0 64px 0;border-top:solid 8px #DD6B20;">
+
+              {# Template #}
+              <table width="100%" align="center" cellspacing="0" cellpadding="0"
+                border="0">
+
+                {# Header #}
+                <tr>
+                  <td align="center" valign="top" class="header"
+                    style="padding:0 40px 0 40px">
+                    <img src="cid:{{ icon }}" width="64" height="64">
+                  </td>
+                </tr>
+
+                {# Content #}
+                <tr>
+                  <td align="center" valign="top" class="content"
+                    style="padding:40px 64px 40px 64px;border-bottom:solid 1px #E2E8F0">
+                    {% block content %}{% endblock %}
+                  </td>
+                </tr>
+
+                {# Footer #}
+                <tr>
+                  <td align="center" class="footer" style="padding-top:40px">
+                    <p style="margin-bottom:12px">
+                      <a>Unsubscribe</a> •
+                      <a>Terms</a> •
+                      <a>Privacy</a>
+                    </p>
+                    <p>© 2023 Flask Login. All rights reserved.</p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
-          <tr>
-            <td align="center" class="content">
-              {% block content %}{% endblock %}
-            </td>
-          </tr>
-          <tr>
-            <td align="center" class="footer">
-              <p>
-                <a>Unsubscribe</a> •
-                <a>Terms</a> •
-                <a>Privacy</a>
-              </p>
-              <p>© 2023 Flask Login. All rights reserved.</p>
-            </td>
-          </tr>
+        </table>
       </td>
     </tr>
   </table>
