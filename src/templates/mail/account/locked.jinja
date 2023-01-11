@@ -4,16 +4,58 @@
 
 
 {% block content %}
-<h1>Your account has been locked</h1>
-<p class="subtitle">
-  Your account has been locked due to too many failed login attempts.
-  Please try again in {{ lock_duration }} minutes.
-</p>
-<p>If you need to reset your password, click the link below:</p>
-<a href="{{ url }}">
-  <button>Reset your password</button>
-</a>
-<p class="small">
-  You can still browse our public pages while you wait.
-</p>
+<table width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
+
+  {# Heading #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:8px">
+      <h1>Your account has been locked</h1>
+    </td>
+  </tr>
+
+  {# Subtitle #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <p class="subtitle">
+        Your account has been locked due to too many failed login attempts.
+        Please try again in {{ lock_duration }} minutes.
+      </p>
+    </td>
+  </tr>
+
+  {# Call to Action #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <p>If you need to reset your password, click the link below:</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <div>
+        <!--[if mso]>
+        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+          xmlns:w="urn:schemas-microsoft-com:office:word"
+          style="height:50px;v-text-anchor:middle;width:200px;text-decoration:none;color:white;"
+          href="{{ url }}" arcsize="15%" stroke="f" fillcolor="#DD6B20">
+        <w:anchorlock/>
+        <center>
+        <![endif]-->
+        <a href="{{ url }}" class="button">Reset your password</a>
+        <!--[if mso]>
+        </center>
+        </v:roundrect>
+        <![endif]-->
+      </div>
+    </td>
+  </tr>
+
+  {# Footnote #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <p class="footnote">
+        You can still browse our public pages while you wait.
+      </p>
+    </td>
+  </tr>
+</table>
 {% endblock %}
