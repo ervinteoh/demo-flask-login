@@ -1,0 +1,17 @@
+{% macro input(field, show_error=true) -%}
+{% set class = "is-invalid" if field.errors else "" %}
+<div class="form-control">
+  {{ field(value=field.data|default('', true)) }}
+  <label>{{ field.label }}</label>
+</div>
+<div class="invalid-feedback">
+  {% for error in field.errors if show_error %}
+  <span>{{ error }}</span>
+  {% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro checkbox(field) -%}
+{{ form.remember }}
+{{ form.remember.label }}
+{%- endmacro %}

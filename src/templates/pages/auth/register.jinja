@@ -1,0 +1,40 @@
+{% from "includes/scripts.jinja" import input with context %}
+{% extends "layouts/auth.jinja" %}
+{% set title = "Register" %}
+{% set heading = "Sign Up" %}
+
+{% block form %}
+<form action="" id="registerForm" method="POST" class="w-full max-w-lg mt-4 px-6">
+  {{ form.csrf_token }}
+  <div class="mb-6">
+    {{ input(form.username) }}
+  </div>
+  <div class="flex flex-col gap-6 mb-6 md:flex-row">
+    <div class="flex-1">
+      {{ input(form.first_name) }}
+    </div>
+    <div class="flex-1">
+      {{ input(form.last_name) }}
+    </div>
+  </div>
+  <div class="mb-6">
+    {{ input(form.email) }}
+  </div>
+  <div class="mb-6">
+    {{ input(form.password) }}
+  </div>
+  <div class="mb-6">
+    {{ input(form.confirm_password) }}
+  </div>
+  {{ form.submit(class_="w-full mb-4") }}
+  <a href="{{ url_for('google.authenticate') }}"
+    class="w-full mb-4 btn btn-outline-secondary">Sign up with Google</a>
+</form>
+{% endblock form %}
+
+{% block footnote %}
+<p class="text-sm lg:text-base">
+  Already have an account?
+  <a href="{{ url_for('account.login') }}">Sign In</a>
+</p>
+{% endblock footnote %}

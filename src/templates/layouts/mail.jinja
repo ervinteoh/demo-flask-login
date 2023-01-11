@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} - Flask Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!--[if mso]>
+    <noscript>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    </noscript>
+  <![endif]-->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    img {
+      border: 0 none;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+
+    a img {
+      border: 0 none;
+    }
+
+    table {
+      outline: none;
+      border-collapse: collapse;
+      border-spacing: 0;
+      table-layout: auto !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1,
+    p,
+    a {
+      margin: 0;
+    }
+
+    h1,
+    p {
+      font-size: 16px;
+      color: #07090D;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #2D3748;
+    }
+
+    .footnote {
+      color: #718096;
+      font-size: 14px;
+    }
+
+    .footer p {
+      font-size: 14px;
+      color: #2D3748;
+    }
+
+    button,
+    .button {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 16px 28px;
+      background-color: #DD6B20;
+      border: none;
+      border-radius: 7px;
+      color: #FBFDFE !important;
+      text-decoration: none;
+    }
+
+    @media screen and (max-width: 600px) {
+      .content {
+        padding: 40px 24px 40px 24px !important;
+      }
+    }
+
+  </style>
+</head>
+
+<body style="margin:0;padding:0;">
+
+  {# Body #}
+  <table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#EDF2F7">
+    <tr>
+      <td align="left" valign="top" style="padding:80px 0 80px 0">
+
+        {# Container #}
+        <table width="600" align="center" cellspacing="0" cellpadding="0" border="0"
+          bgcolor="#FBFDFE" style="width:600px;max-width:600px;margin:0 auto">
+          <tr>
+            <td align="left" valign="top"
+              style="padding:64px 0 64px 0;border-top:solid 8px #DD6B20;">
+
+              {# Template #}
+              <table width="100%" align="center" cellspacing="0" cellpadding="0"
+                border="0">
+
+                {# Header #}
+                <tr>
+                  <td align="center" valign="top" class="header"
+                    style="padding:0 40px 0 40px">
+                    <img src="cid:{{ icon }}" width="64" height="64">
+                  </td>
+                </tr>
+
+                {# Content #}
+                <tr>
+                  <td align="center" valign="top" class="content"
+                    style="padding:40px 64px 40px 64px;border-bottom:solid 1px #E2E8F0">
+                    {% block content %}{% endblock %}
+                  </td>
+                </tr>
+
+                {# Footer #}
+                <tr>
+                  <td align="center" class="footer" style="padding-top:40px">
+                    <p style="margin-bottom:12px">
+                      <a>Unsubscribe</a> •
+                      <a>Terms</a> •
+                      <a>Privacy</a>
+                    </p>
+                    <p>© 2023 Flask Login. All rights reserved.</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

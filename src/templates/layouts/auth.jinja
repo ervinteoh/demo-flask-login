@@ -1,0 +1,43 @@
+{% extends "layouts/base.jinja" %}
+
+{% block body %}
+<main id="page-{{ title|lower|replace(' ', '-') }}" class="flex">
+  <section class="flex-col justify-between flex-1 hidden min-h-screen py-8
+      overflow-hidden bg-primary-50 lg:flex">
+    <div class="h-20 px-10">
+      <a href="/" class="inline-flex items-center gap-x-4">
+        <object data="{{ url_for('static', filename='img/logo/company.svg') }}"
+          height="48" alt="Company Logo" title="Company Logo"
+          class="pointer-events-none">
+        </object>
+      </a>
+    </div>
+    <div class="text-center text-primary-800">
+      <object data="{{ url_for('static', filename='img/illustration/globe.svg') }}"
+        alt="" title="Hero Image" class="mb-4">
+      </object>
+      <h2 class="h4 2xl:text-5xl">Travelling Made Easy</h2>
+      <p class="subtitle-sm">Checkout our newest features today!</p>
+    </div>
+    <div class="h-20"></div>
+  </section>
+  <section class="flex flex-col justify-between flex-1 min-h-screen gap-10 pb-6
+      bg-white lg:py-8">
+    <div class="lg:hidden">
+      {% include "includes/navigation.jinja" %}
+    </div>
+    <div class="hidden h-10 lg:block"></div>
+    <div class="flex flex-col items-center justify-center">
+      <div class="max-w-md px-6 text-center">
+        <h1 class="mb-2 h4">{{ heading }}</h1>
+        <p class="subtitle-sm">Please note that this is just a demo web application only
+          the authentication features implemented.</p>
+      </div>
+      {% block form %}{% endblock form %}
+    </div>
+    <div class="flex items-center justify-center min-h-10">
+      <p>{% block footnote %}{% endblock footnote %}</p>
+    </div>
+  </section>
+</main>
+{% endblock body %}

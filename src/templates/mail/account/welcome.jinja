@@ -1,0 +1,60 @@
+{% extends "layouts/mail.jinja" %}
+{% set title = "Email Verification" %}
+{% set icon = "IconEmail" %}
+
+
+{% block content %}
+<table width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
+
+  {# Heading #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:8px">
+      <h1>Welcome to Flask Login</h1>
+    </td>
+  </tr>
+
+  {# Subtitle #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <p class="subtitle">Thank for you registering an account with us.</p>
+    </td>
+  </tr>
+
+  {# Call to Action #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <p>Click below to verify your account.</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <div>
+        <!--[if mso]>
+        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+          xmlns:w="urn:schemas-microsoft-com:office:word"
+          style="height:50px;v-text-anchor:middle;width:200px;text-decoration:none;color:white;"
+          href="{{ url }}" arcsize="15%" stroke="f" fillcolor="#DD6B20">
+        <w:anchorlock/>
+        <center>
+        <![endif]-->
+        <a href="{{ url }}" class="button">Verify my email address</a>
+        <!--[if mso]>
+        </center>
+        </v:roundrect>
+        <![endif]-->
+      </div>
+    </td>
+  </tr>
+
+  {# Footnote #}
+  <tr>
+    <td align="center" valign="top" style="padding-bottom:24px">
+      <p class="footnote">
+        Didn't create a Flask Login account?
+        It's likely someone just typed in your email address by accident.
+        Feel free to ignore this email.
+      </p>
+    </td>
+  </tr>
+</table>
+{% endblock %}

@@ -18,3 +18,4 @@ SQL database.
 
         $ flask db upgrade
 """
+from src.models.user import User, UserToken

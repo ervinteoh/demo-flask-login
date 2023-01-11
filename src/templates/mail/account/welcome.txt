@@ -1,0 +1,12 @@
+Hi {{ user.first_name }} {{ user.last_name }},
+
+Thank you for registering an account with us.
+Click the link below to verify your email address:
+{{ url }}
+
+Didn't create a Flask Login account?
+It's likely someone just typed in your email address by accident.
+Feel free to ignore this email.
+
+Regards,
+Flask Login.

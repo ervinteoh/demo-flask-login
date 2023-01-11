@@ -1,5 +1,5 @@
 <nav class="bg-white drop-shadow lg:drop-shadow-none">
-  <div class="container py-4 md:py-6">
+  <div class="container py-4 lg:py-6">
     <div class="flex items-center">
       <div class="flex items-center flex-auto">
         <a href="/" class="inline-flex items-center gap-x-4">
@@ -13,8 +13,16 @@
         </a>
       </div>
       <div class="flex-auto text-right">
-        <a href="" class="hidden btn btn-none-secondary sm:inline-block">Sign In</a>
-        <a href="" class="btn btn-primary">Sign Up</a>
+        {% if current_user.is_authenticated %}
+        <form action="{{ url_for('account.logout') }}" method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" name="submit" class="btn btn-primary">Sign Out</button>
+        </form>
+        {% else %}
+        <a href="{{ url_for('account.login') }}"
+          class="hidden btn btn-none-secondary sm:inline-block">Sign In</a>
+        <a href="{{ url_for('account.register') }}" class="btn btn-primary">Sign Up</a>
+        {% endif %}
       </div>
     </div>
   </div>

@@ -17,8 +17,8 @@ are used depending on the environment set on ``FLASK_ENV``. Please read
 """
 from flask import Flask, current_app, render_template
 
-from src import extensions, settings
-from src.views import public
+from src import extensions, models, settings
+from src.views import account, google, public
 
 
 def create_app() -> Flask:
@@ -33,7 +33,7 @@ def create_app() -> Flask:
     :rtype: Flask
     """
     app = Flask(__name__)
-    config = settings.get_config(app)
+    config = settings.get_config()
     app.config.from_object(config)
     app.url_map.strict_slashes = False
 
@@ -55,7 +55,7 @@ def register_extensions(app: Flask):
     extensions.bcrypt.init_app(app)
     extensions.db.init_app(app)
     extensions.csrf_protect.init_app(app)
-    # extensions.login_manager.init_app(app)
+    extensions.login_manager.init_app(app)
     extensions.migrate.init_app(app, extensions.db)
     extensions.mail.init_app(app)
     extensions.jwt.init_app(app)
@@ -70,6 +70,8 @@ def register_blueprints(app: Flask):
     :type app: Flask
     """
     app.register_blueprint(public.blueprint)
+    app.register_blueprint(account.blueprint)
+    app.register_blueprint(google.blueprint)
 
 
 def register_shellcontext(app: Flask):
@@ -79,7 +81,12 @@ def register_shellcontext(app: Flask):
     :param app: The application instance.
     :type app: Flask
     """
-    shell_context = {"db": extensions.db}
+    shell_context = {
+        "db": extensions.db,
+        "mail": extensions.mail,
+        "jwt": extensions.jwt,
+        "User": models.User,
+    }
 
     app.shell_context_processor(lambda: shell_context)
 
