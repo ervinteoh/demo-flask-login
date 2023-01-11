@@ -117,7 +117,8 @@ def activate(token):
     if user is not None:
         user.update(is_active=True)
         subject = "Your email address has been verified."
-        user.send_mail(subject, "account/activated", url=url_for("account.login"))
+        url = request.host_url.rstrip("/") + url_for("account.login")
+        user.send_mail(subject, "account/activated", url=url)
         flash(success_message, "success")
     return redirect(url_for("account.login"))
 
