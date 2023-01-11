@@ -1,6 +1,6 @@
 {% extends "layouts/mail.jinja" %}
-{% set title = "Password Reset" %}
-{% set icon = "IconKey" %}
+{% set title = "Email Verification" %}
+{% set icon = "IconEmail" %}
 
 
 {% block content %}
@@ -9,24 +9,21 @@
   {# Heading #}
   <tr>
     <td align="center" valign="top" style="padding-bottom:8px">
-      <h1>Forgot your password?</h1>
+      <h1>Welcome to Flask Login</h1>
     </td>
   </tr>
 
   {# Subtitle #}
   <tr>
     <td align="center" valign="top" style="padding-bottom:24px">
-      <p class="subtitle">
-        We've received a request to reset the password for your account.
-        No changes has been made to your account yet.
-      </p>
+      <p class="subtitle">Thank for you registering an account with us.</p>
     </td>
   </tr>
 
   {# Call to Action #}
   <tr>
     <td align="center" valign="top" style="padding-bottom:24px">
-      <p>You can reset your password by clicking the link below:</p>
+      <p>Click below to verify your account.</p>
     </td>
   </tr>
   <tr>
@@ -40,7 +37,7 @@
         <w:anchorlock/>
         <center>
         <![endif]-->
-        <a href="{{ url }}" class="button">Reset your password</a>
+        <a href="{{ url }}" class="button">Verify my email address</a>
         <!--[if mso]>
         </center>
         </v:roundrect>
@@ -53,8 +50,9 @@
   <tr>
     <td align="center" valign="top" style="padding-bottom:24px">
       <p class="footnote">
-        If your didn't request a password reset, you can ignore this
-        email. Your password will not be changed.
+        Didn't create a Flask Login account?
+        It's likely someone just typed in your email address by accident.
+        Feel free to ignore this email.
       </p>
     </td>
   </tr>

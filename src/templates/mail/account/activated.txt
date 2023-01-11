@@ -1,0 +1,11 @@
+Hi {{ user.first_name }} {{ user.last_name }},
+
+Your email address has been successfully verified.
+You can now login to your account at our website. 
+Click the link below to login to your account:
+{{ url }}
+
+In case you forgot, your username is: {{ user.username }}.
+
+Regards,
+Flask Login.

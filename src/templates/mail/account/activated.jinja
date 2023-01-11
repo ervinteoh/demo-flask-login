@@ -1,6 +1,6 @@
 {% extends "layouts/mail.jinja" %}
-{% set title = "Password Reset" %}
-{% set icon = "IconKey" %}
+{% set title = "Email Verified" %}
+{% set icon = "IconCheck" %}
 
 
 {% block content %}
@@ -9,7 +9,7 @@
   {# Heading #}
   <tr>
     <td align="center" valign="top" style="padding-bottom:8px">
-      <h1>Forgot your password?</h1>
+      <h1>Account Verified</h1>
     </td>
   </tr>
 
@@ -17,18 +17,13 @@
   <tr>
     <td align="center" valign="top" style="padding-bottom:24px">
       <p class="subtitle">
-        We've received a request to reset the password for your account.
-        No changes has been made to your account yet.
+        Your email address has been successfully verified.
+        You can now login to your account at our website.
       </p>
     </td>
   </tr>
 
   {# Call to Action #}
-  <tr>
-    <td align="center" valign="top" style="padding-bottom:24px">
-      <p>You can reset your password by clicking the link below:</p>
-    </td>
-  </tr>
   <tr>
     <td align="center" valign="top" style="padding-bottom:24px">
       <div>
@@ -40,7 +35,7 @@
         <w:anchorlock/>
         <center>
         <![endif]-->
-        <a href="{{ url }}" class="button">Reset your password</a>
+        <a href="{{ url }}" class="button">Login to your account.</a>
         <!--[if mso]>
         </center>
         </v:roundrect>
@@ -53,8 +48,7 @@
   <tr>
     <td align="center" valign="top" style="padding-bottom:24px">
       <p class="footnote">
-        If your didn't request a password reset, you can ignore this
-        email. Your password will not be changed.
+        In case you forgot, your username is: <strong>{{ user.username }}</strong>.
       </p>
     </td>
   </tr>

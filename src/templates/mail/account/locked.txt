@@ -1,8 +1,10 @@
 Hi {{ user.first_name }} {{ user.last_name }},
 
-Your account has been locked for {{ lock_duration }} minutes due to multiple failed
-login attempts. If this was not you, please change your password to a secure password
-as someone may be trying to breach your account.
+Your account has been locked due to too many failed login attempts.
+Please try again in {{ lock_duration }} minutes.
+
+If you need to reset your password, click the link below:
+{{ url }}
 
 Regards,
 Flask Login.
