@@ -1,5 +1,5 @@
 {
-  "name": "flask-demo-login",
+  "name": "demo-flask-login",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ervinteoh/flask-demo-login.git"
+    "url": "git+https://github.com/ervinteoh/demo-flask-login.git"
   },
   "author": "Jie Sheng Teoh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ervinteoh/flask-demo-login/issues"
+    "url": "https://github.com/ervinteoh/demo-flask-login/issues"
   },
-  "homepage": "https://github.com/ervinteoh/flask-demo-login#readme",
+  "homepage": "https://github.com/ervinteoh/demo-flask-login#readme",
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/preset-env": "^7.20.2",

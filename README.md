@@ -23,23 +23,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/ervinteoh/flask-demo-login">
+  <a href="https://github.com/ervinteoh/demo-flask-login">
     <img src="images/logo.svg" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Flask Demo Login</h3>
+<h3 align="center">Flask Login</h3>
 
   <p align="center">
     A demonstration of an authentication system on a website.
     <br />
-    <a href="https://github.com/ervinteoh/flask-demo-login"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/ervinteoh/demo-flask-login"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://flask-demo-login.onrender.com/">View Demo</a>
+    <a href="https://demo-flask-login.onrender.com/">View Demo</a>
     ·
-    <a href="https://github.com/ervinteoh/flask-demo-login/issues">Report Bug</a>
+    <a href="https://github.com/ervinteoh/demo-flask-login/issues">Report Bug</a>
     ·
-    <a href="https://github.com/ervinteoh/flask-demo-login/issues">Request Feature</a>
+    <a href="https://github.com/ervinteoh/demo-flask-login/issues">Request Feature</a>
   </p>
 </div>
 
@@ -76,7 +76,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://flask-demo-login.onrender.com/)
+[![Product Name Screen Shot][product-screenshot]](https://demo-flask-login.onrender.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -113,7 +113,7 @@
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/ervinteoh/flask-demo-login.git
+   git clone https://github.com/ervinteoh/demo-flask-login.git
    ```
 2. Install NPM packages
    ```sh
@@ -168,7 +168,7 @@ flask --help
 - [ ] Milestone 2
 - [ ] Milestone 3
 
-See the [open issues](https://github.com/ervinteoh/flask-demo-login/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/ervinteoh/demo-flask-login/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -186,7 +186,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Jie Sheng Teoh (Ervin) - teohjies@gmail.com
 
-Project Link: [https://github.com/ervinteoh/flask-demo-login](https://github.com/ervinteoh/flask-demo-login)
+Project Link: [https://github.com/ervinteoh/demo-flask-login](https://github.com/ervinteoh/demo-flask-login)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -204,16 +204,16 @@ Project Link: [https://github.com/ervinteoh/flask-demo-login](https://github.com
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/ervinteoh/flask-demo-login.svg?style=for-the-badge
-[contributors-url]: https://github.com/ervinteoh/flask-demo-login/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/ervinteoh/flask-demo-login.svg?style=for-the-badge
-[forks-url]: https://github.com/ervinteoh/flask-demo-login/network/members
-[stars-shield]: https://img.shields.io/github/stars/ervinteoh/flask-demo-login.svg?style=for-the-badge
-[stars-url]: https://github.com/ervinteoh/flask-demo-login/stargazers
-[issues-shield]: https://img.shields.io/github/issues/ervinteoh/flask-demo-login.svg?style=for-the-badge
-[issues-url]: https://github.com/ervinteoh/flask-demo-login/issues
-[license-shield]: https://img.shields.io/github/license/ervinteoh/flask-demo-login.svg?style=for-the-badge
-[license-url]: https://github.com/ervinteoh/flask-demo-login/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/ervinteoh/demo-flask-login.svg?style=for-the-badge
+[contributors-url]: https://github.com/ervinteoh/demo-flask-login/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ervinteoh/demo-flask-login.svg?style=for-the-badge
+[forks-url]: https://github.com/ervinteoh/demo-flask-login/network/members
+[stars-shield]: https://img.shields.io/github/stars/ervinteoh/demo-flask-login.svg?style=for-the-badge
+[stars-url]: https://github.com/ervinteoh/demo-flask-login/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ervinteoh/demo-flask-login.svg?style=for-the-badge
+[issues-url]: https://github.com/ervinteoh/demo-flask-login/issues
+[license-shield]: https://img.shields.io/github/license/ervinteoh/demo-flask-login.svg?style=for-the-badge
+[license-url]: https://github.com/ervinteoh/demo-flask-login/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/ervinteoh
 [product-screenshot]: images/screenshot.png
